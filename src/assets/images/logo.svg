@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 40" width="220" height="40">
+  <circle cx="14" cy="20" r="9" fill="#dc2626" />
+  <path d="M14 12.5c-2.2 2-2.2 5.5 0 7.5-2.2 2-2.2 5.5 0 7.5" stroke="#ffffff" stroke-width="1.6" fill="none" stroke-linecap="round" opacity="0.85"/>
+  <text x="32" y="27" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#ffffff" letter-spacing="0.2">PythonSphere</text>
+</svg>
