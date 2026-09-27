@@ -86,7 +86,7 @@ export function ProductsSection() {
 
         {/* Industry-aligned curriculum — bordered, icon-led callout */}
         <div className="flex items-start gap-4 rounded-2xl border border-gray-200 bg-surface/70 px-6 py-5 mb-14 max-w-4xl animate-reveal-up delay-200">
-          <span className="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-quantasphere-red-50 text-quantasphere-red">
+          <span className="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-brand-50 text-brand">
             <Shield className="w-5 h-5" strokeWidth={1.5} />
           </span>
           <div>
@@ -149,16 +149,16 @@ export function ProductsSection() {
             <a
               key={product.id}
               href={product.href}
-              className="group flex flex-col rounded-2xl bg-surface border border-gray-200 p-8 md:p-10 transition-all duration-500 hover:-translate-y-1 hover:border-quantasphere-red/40 hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.18)] active:translate-y-0 animate-reveal-up"
+              className="group flex flex-col rounded-2xl bg-surface border border-gray-200 p-8 md:p-10 transition-all duration-500 hover:-translate-y-1 hover:border-brand/40 hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.18)] active:translate-y-0 animate-reveal-up"
               style={{ animationDelay: `${(index + 4) * 120}ms` }}
             >
               <div className="flex items-center gap-4 mb-6">
-                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-50 border border-gray-200 text-quantasphere-red">
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gray-50 border border-gray-200 text-brand">
                   <ShieldGlyph id={product.id} className="w-6 h-6" />
                 </span>
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 tracking-tight">{product.title}</h3>
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-quantasphere-red mt-0.5">{product.tier}</p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand mt-0.5">{product.tier}</p>
                 </div>
               </div>
               <p className="text-gray-600 leading-relaxed mb-6 flex-grow">{product.description}</p>
@@ -182,7 +182,7 @@ export function ProductsSection() {
           <button
             type="button"
             onClick={() => document.getElementById('two-pronged-approach')?.scrollIntoView({ behavior: 'smooth' })}
-            className="inline-flex items-center justify-center gap-2 bg-quantasphere-red hover:bg-quantasphere-red-hover text-white px-6 py-3 rounded-lg font-semibold transition-colors active:translate-y-px"
+            className="inline-flex items-center justify-center gap-2 bg-brand hover:bg-brand-hover text-white px-6 py-3 rounded-lg font-semibold transition-colors active:translate-y-px"
           >
             See how it works
             <ArrowRight className="w-5 h-5" strokeWidth={1.5} />

@@ -66,16 +66,8 @@ export function Navigation5() {
     setMobileOpen(false);
   };
 
-  const isQShieldActive =
-    (isHome && activeSection === 'products') ||
-    location.pathname === '/Science' ||
-    location.pathname === '/WhyItWorks';
-
-  const isAboutActive =
-    (isHome && activeSection === 'about') || location.pathname === '/VisionMission';
-
-  const isApplicationsActive =
-    location.pathname.startsWith('/Genomics') || location.pathname.startsWith('/Industries');
+  const isCoursesActive = isHome && activeSection === 'products';
+  const isAboutActive = isHome && activeSection === 'about';
 
   const baseLink =
     'rounded-full bg-transparent px-4 py-2 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50';
@@ -131,7 +123,7 @@ export function Navigation5() {
 
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
-                    className={cn(triggerCls, isQShieldActive && 'text-neutral-900 dark:text-neutral-50')}
+                    className={cn(triggerCls, isCoursesActive && 'text-neutral-900 dark:text-neutral-50')}
                   >
                     Courses
                   </NavigationMenuTrigger>
@@ -164,7 +156,7 @@ export function Navigation5() {
 
                 <NavigationMenuItem>
                   <NavigationMenuTrigger
-                    className={cn(triggerCls, isApplicationsActive && 'text-neutral-900 dark:text-neutral-50')}
+                    className={triggerCls}
                   >
                     Resources
                   </NavigationMenuTrigger>
@@ -229,7 +221,7 @@ export function Navigation5() {
             </button>
             <Button
               onClick={() => handleNavClick('contact')}
-              className="hidden rounded-full bg-quantasphere-red px-6 font-semibold text-white hover:bg-quantasphere-red-hover md:block"
+              className="hidden rounded-full bg-brand px-6 font-semibold text-white hover:bg-brand-hover md:block"
             >
               Get Started
             </Button>
@@ -270,7 +262,7 @@ export function Navigation5() {
                     </button>
 
                     <Accordion type="single" collapsible className="w-full">
-                      <AccordionItem value="qshield" className="border-none">
+                      <AccordionItem value="courses" className="border-none">
                         <AccordionTrigger className="justify-between py-0 text-base font-medium text-neutral-900 hover:no-underline dark:text-neutral-50">
                           Courses
                         </AccordionTrigger>
@@ -278,14 +270,14 @@ export function Navigation5() {
                           <button
                             type="button"
                             onClick={() => handleNavClick('products')}
-                            className="text-left text-sm font-medium tracking-tight text-neutral-600 hover:text-quantasphere-red dark:text-neutral-300"
+                            className="text-left text-sm font-medium tracking-tight text-neutral-600 hover:text-brand dark:text-neutral-300"
                           >
                             All Tracks
                           </button>
                           <button
                             type="button"
                             onClick={() => handleNavClick('two-pronged-approach')}
-                            className="text-left text-sm font-medium tracking-tight text-neutral-600 hover:text-quantasphere-red dark:text-neutral-300"
+                            className="text-left text-sm font-medium tracking-tight text-neutral-600 hover:text-brand dark:text-neutral-300"
                           >
                             How It Works
                           </button>
@@ -300,14 +292,14 @@ export function Navigation5() {
                           <button
                             type="button"
                             onClick={() => handleNavClick('products')}
-                            className="text-left text-sm font-medium tracking-tight text-neutral-600 hover:text-quantasphere-red dark:text-neutral-300"
+                            className="text-left text-sm font-medium tracking-tight text-neutral-600 hover:text-brand dark:text-neutral-300"
                           >
                             Documentation
                           </button>
                           <button
                             type="button"
                             onClick={() => handleNavClick('about')}
-                            className="text-left text-sm font-medium tracking-tight text-neutral-600 hover:text-quantasphere-red dark:text-neutral-300"
+                            className="text-left text-sm font-medium tracking-tight text-neutral-600 hover:text-brand dark:text-neutral-300"
                           >
                             Community
                           </button>
@@ -322,14 +314,14 @@ export function Navigation5() {
                           <button
                             type="button"
                             onClick={() => handleNavClick('about')}
-                            className="text-left text-sm font-medium tracking-tight text-neutral-600 hover:text-quantasphere-red dark:text-neutral-300"
+                            className="text-left text-sm font-medium tracking-tight text-neutral-600 hover:text-brand dark:text-neutral-300"
                           >
                             Team &amp; Milestones
                           </button>
                           <button
                             type="button"
                             onClick={() => handleNavClick('contact')}
-                            className="text-left text-sm font-medium tracking-tight text-neutral-600 hover:text-quantasphere-red dark:text-neutral-300"
+                            className="text-left text-sm font-medium tracking-tight text-neutral-600 hover:text-brand dark:text-neutral-300"
                           >
                             Get in Touch
                           </button>
@@ -341,7 +333,7 @@ export function Navigation5() {
                   <div className="mt-auto flex flex-col gap-3">
                     <Button
                       onClick={() => handleNavClick('contact')}
-                      className="w-full rounded-full bg-quantasphere-red text-white hover:bg-quantasphere-red-hover"
+                      className="w-full rounded-full bg-brand text-white hover:bg-brand-hover"
                     >
                       Get Started <ChevronRight className="ml-1 size-4" />
                     </Button>

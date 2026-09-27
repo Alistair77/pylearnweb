@@ -40,7 +40,7 @@ export function ContactSection() {
           />
           <button
             type="submit"
-            className="w-full bg-quantasphere-red hover:bg-quantasphere-red-hover text-white font-semibold py-3 px-6 rounded-lg text-lg flex items-center justify-center gap-2 transition-colors"
+            className="w-full bg-brand hover:bg-brand-hover text-white font-semibold py-3 px-6 rounded-lg text-lg flex items-center justify-center gap-2 transition-colors"
           >
             <Send className="w-5 h-5" />
             Send Inquiry

@@ -52,95 +52,94 @@ function handleScroll(id) {
   if (el) el.scrollIntoView({ behavior: 'smooth' });
 }
 
+/* Track where the shield "stage" sits inside the hero so the 3D scene can place itself there */
+function useStageFocus(heroRef, stageRef) {
+  const [focus, setFocus] = useState(null);
+  useEffect(() => {
+    const hero = heroRef.current;
+    const stage = stageRef.current;
+    if (!hero || !stage) return undefined;
+    const measure = () => setFocus({ y: stage.offsetTop + stage.offsetHeight / 2, h: stage.offsetHeight });
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(hero);
+    ro.observe(stage);
+    return () => ro.disconnect();
+  }, [heroRef, stageRef]);
+  return focus;
+}
+
 export default function Hero() {
   const [linesWritten] = useCountUp(9384217);
+  const heroRef = useRef(null);
+  const stageRef = useRef(null);
+  const focus = useStageFocus(heroRef, stageRef);
 
   return (
     <section
       id="hero"
       className="relative w-full overflow-hidden text-gray-900"
-      style={{ background: 'radial-gradient(120% 100% at 75% 30%, var(--hero-glow) 0%, var(--bg) 60%)' }}
+      style={{ background: 'radial-gradient(90% 70% at 50% 72%, var(--hero-glow) 0%, var(--bg) 70%)' }}
     >
-      {/* ===================== HERO ROW ===================== */}
-      <div className="relative mx-auto max-w-[1400px] px-6 pt-28 md:pt-32">
-        <div className="relative grid items-center gap-6 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.25fr)] lg:min-h-[64vh]">
-          {/* Left copy */}
-          <div className="relative z-20 animate-reveal-up">
-            <div className="mb-6 flex items-center gap-3">
-              <span className="text-sm font-semibold uppercase tracking-[0.18em] text-quantasphere-red">
-                Learn Python, Practically
-              </span>
-            </div>
-            <span className="block h-[3px] w-12 bg-quantasphere-red mb-7" />
-            <h1
-              className="font-extrabold tracking-tight text-gray-900"
-              style={{ fontSize: 'clamp(2.6rem, 4.4vw, 4rem)', lineHeight: 1.02, letterSpacing: '-0.02em' }}
+      {/* ===================== FULL-SCREEN HERO ===================== */}
+      <div ref={heroRef} className="relative isolate flex min-h-[100svh] flex-col">
+        {/* 3D scene fills the whole hero; pointer events come from the hero so the shield tilts even over the text */}
+        <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+          <Suspense fallback={null}>
+            <QuantumScene focus={focus} eventSource={heroRef} />
+          </Suspense>
+        </div>
+
+        {/* Centered copy — sits above the stage, never on top of the shield */}
+        <div className="relative z-10 mx-auto w-full max-w-4xl px-6 pt-28 text-center md:pt-32 animate-reveal-up">
+          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-brand sm:text-sm">
+            Learn Python, Practically
+          </span>
+          <span className="mx-auto mt-5 mb-6 block h-[3px] w-12 bg-brand" />
+          <h1
+            className="font-extrabold tracking-tight text-gray-900"
+            style={{ fontSize: 'clamp(2.4rem, 5.2vw, 4.5rem)', lineHeight: 1.02, letterSpacing: '-0.02em' }}
+          >
+            Code confidently.
+            <br />
+            <span className="text-brand">Ship real projects.</span>
+          </h1>
+          <p className="mx-auto mt-6 max-w-[58ch] text-base leading-relaxed text-gray-600 sm:text-lg">
+            PyLearnWeb teaches Python through structured lessons and hands-on projects — the skills that
+            actually stick, not tutorials you forget by tomorrow.
+          </p>
+          <div className="mx-auto mt-8 flex max-w-xs flex-col justify-center gap-3 sm:max-w-none sm:flex-row sm:gap-4">
+            <button
+              onClick={() => handleScroll('products')}
+              className="group inline-flex items-center justify-center gap-2 rounded-lg bg-brand px-4 py-3.5 text-xs font-semibold uppercase tracking-wide text-white shadow-lg shadow-brand/20 transition-colors hover:bg-brand-hover active:translate-y-px sm:px-7 sm:py-4 sm:text-sm"
             >
-              Code confidently.
-              <br />
-              <span className="text-quantasphere-red">Ship real projects.</span>
-            </h1>
-            <p className="mt-7 max-w-[46ch] text-lg leading-relaxed text-gray-600 text-pretty">
-              PyLearnWeb teaches Python through structured lessons and hands-on projects — the skills that
-              actually stick, not tutorials you forget by tomorrow. Guided practice today. Real projects tomorrow.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <button
-                onClick={() => handleScroll('products')}
-                className="group inline-flex items-center justify-center gap-2 rounded-lg bg-quantasphere-red px-7 py-4 text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-quantasphere-red-hover active:translate-y-px"
-              >
-                Explore Courses
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
-              </button>
-              <button
-                onClick={() => handleScroll('two-pronged-approach')}
-                className="group inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-surface/70 px-7 py-4 text-sm font-semibold uppercase tracking-wide text-gray-800 backdrop-blur-sm transition-colors hover:border-gray-400 hover:bg-surface active:translate-y-px"
-              >
-                How It Works
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
-              </button>
-            </div>
-            <div className="mt-8 sm:mt-10 flex items-center gap-2.5 text-sm text-gray-500">
-              <Shield className="w-4 h-4 text-quantasphere-red" strokeWidth={1.75} />
-              Trusted by a growing global community
-            </div>
-          </div>
-
-          {/* Right: live 3D scene */}
-          <div className="relative -mx-6 h-[360px] sm:mx-0 sm:h-[520px] lg:h-[600px]">
-            <Suspense fallback={null}>
-              <QuantumScene />
-            </Suspense>
-
-            {/* floating side labels */}
-            <div className="pointer-events-none absolute left-0 top-[24%] hidden max-w-[150px] md:block">
-              <p className="text-[11px] font-semibold uppercase leading-tight tracking-[0.14em] text-gray-700">
-                Concepts<br />Learned
-              </p>
-              <span className="my-2 block h-5 w-px bg-gray-900/30" />
-              <p className="text-xs leading-snug text-gray-500">Syntax. Logic. Real code.</p>
-            </div>
-            <div className="pointer-events-none absolute right-0 top-[22%] hidden max-w-[150px] text-right md:block">
-              <p className="text-[11px] font-semibold uppercase leading-tight tracking-[0.14em] text-quantasphere-red">
-                Projects<br />Shipped
-              </p>
-              <span className="my-2 ml-auto block h-5 w-px bg-quantasphere-red/40" />
-              <p className="text-xs leading-snug text-gray-500">Scripts. APIs. Apps. Automation. Data tools.</p>
-            </div>
+              Explore Courses
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
+            </button>
+            <button
+              onClick={() => handleScroll('two-pronged-approach')}
+              className="group inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-surface/70 px-4 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-800 backdrop-blur-sm transition-colors hover:border-gray-400 hover:bg-surface active:translate-y-px sm:px-7 sm:py-4 sm:text-sm"
+            >
+              How It Works
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
+            </button>
           </div>
         </div>
 
-        {/* Built for real skills + audiences */}
-        <div className="relative z-10 mt-6 mb-16 text-center animate-reveal-up delay-200">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">Built for Real Skills</p>
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 sm:gap-x-10">
-            {audiences.map((a) => (
-              <div key={a.label} className="flex items-center gap-2.5 text-sm font-medium text-gray-700">
-                <a.icon className="w-5 h-5 text-gray-900" strokeWidth={1.6} />
-                {a.label}
-              </div>
-            ))}
-          </div>
+        {/* Stage: empty space the shield is centred in (measured by useStageFocus) */}
+        <div ref={stageRef} className="flex-1 min-h-[340px] lg:min-h-[300px]" />
+      </div>
+
+      {/* Built for real skills + audiences */}
+      <div className="relative mx-auto max-w-[1400px] px-6 pt-10 pb-16 text-center animate-reveal-up delay-200">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">Built for Real Skills</p>
+        <div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 sm:gap-x-10">
+          {audiences.map((a) => (
+            <div key={a.label} className="flex items-center gap-2.5 text-sm font-medium text-gray-700">
+              <a.icon className="w-5 h-5 text-gray-900" strokeWidth={1.6} />
+              {a.label}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -149,12 +148,12 @@ export default function Hero() {
         <div className="grid grid-cols-1 gap-y-8 rounded-3xl border border-gray-200/80 bg-surface/80 p-6 sm:p-8 backdrop-blur-sm shadow-[0_24px_60px_-30px_rgba(0,0,0,0.15)] md:grid-cols-2 md:gap-x-10 lg:grid-cols-4 lg:divide-x lg:divide-gray-200">
           {products.map((p, i) => (
             <div key={p.title} className={i > 0 ? 'lg:pl-10' : ''}>
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-quantasphere-red-50 text-quantasphere-red">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand">
                 <Shield className="w-5 h-5" strokeWidth={1.75} />
               </span>
               <h3 className="mt-5 text-base font-bold uppercase tracking-wide text-gray-900">{p.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">{p.desc}</p>
-              <button className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-quantasphere-red hover:gap-2.5 transition-all">
+              <button className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:gap-2.5 transition-all">
                 Learn More <ArrowRight className="w-4 h-4" strokeWidth={2} />
               </button>
             </div>
@@ -163,7 +162,7 @@ export default function Hero() {
           {/* Lines of code counter */}
           <div className="lg:pl-10">
             <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Lines of Code Written Today</h3>
-            <p className="mt-3 font-mono text-3xl font-bold tabular-nums text-quantasphere-red">
+            <p className="mt-3 font-mono text-3xl font-bold tabular-nums text-brand">
               {linesWritten.toLocaleString('en-US')}
             </p>
             <svg viewBox="0 0 220 70" className="mt-3 w-full" preserveAspectRatio="none" aria-hidden="true">
@@ -179,7 +178,7 @@ export default function Hero() {
                 <circle key={i} cx={x} cy={y} r="2.6" fill="#dc2626" />
               ))}
             </svg>
-            <button className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-quantasphere-red hover:gap-2.5 transition-all">
+            <button className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:gap-2.5 transition-all">
               See student projects <ArrowRight className="w-4 h-4" strokeWidth={2} />
             </button>
           </div>

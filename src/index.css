@@ -143,11 +143,11 @@
   --font-mono: "JetBrains Mono", monospace;
   --font-display: Inter, system-ui, sans-serif;
   /* Accent + surfaces resolve to runtime tokens so light/dark flip together */
-  --color-quantasphere-red: var(--accent);
-  --color-quantasphere-red-hover: var(--accent-hover);
-  --color-quantasphere-red-light: var(--accent-softer);
-  --color-quantasphere-red-100: var(--accent-soft);
-  --color-quantasphere-red-50: var(--accent-softer);
+  --color-brand: var(--accent);
+  --color-brand-hover: var(--accent-hover);
+  --color-brand-light: var(--accent-softer);
+  --color-brand-100: var(--accent-soft);
+  --color-brand-50: var(--accent-softer);
   --color-accent-on-dark: var(--accent-on-dark);
   --color-surface: var(--surface);
   --color-page: var(--bg);
@@ -196,8 +196,8 @@
   --color-zinc-900: var(--n-900);
   --color-neutral-950: var(--n-950);
   --color-zinc-950: var(--n-950);
-  --color-quantasphere-navy: #0f172a;
-  --color-quantasphere-navy-light: #1e293b;
+  --color-brand-navy: #0f172a;
+  --color-brand-navy-light: #1e293b;
 }
 
 @layer base {
@@ -255,10 +255,10 @@
     @apply bg-neutral-950/80 backdrop-blur-md;
   }
   .card-hover {
-    @apply transition-all duration-300 hover:ring-2 hover:ring-quantasphere-red hover:shadow-xl;
+    @apply transition-all duration-300 hover:ring-2 hover:ring-brand hover:shadow-xl;
   }
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow h-10 rounded-md bg-quantasphere-red hover:bg-quantasphere-red-hover text-white font-semibold px-8 py-3;
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow h-10 rounded-md bg-brand hover:bg-brand-hover text-white font-semibold px-8 py-3;
   }
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border shadow-sm h-10 rounded-md border-gray-300 bg-surface/50 backdrop-blur-sm text-gray-700 hover:bg-gray-100 hover:text-gray-800 hover:border-gray-400 font-semibold px-8 py-3;

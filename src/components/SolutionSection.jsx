@@ -28,12 +28,12 @@ export function SolutionSection() {
           {solutionCards.map((card, i) => (
             <div
               key={card.title}
-              className="bg-surface/80 p-8 rounded-2xl border border-gray-200 transition-all duration-300 hover:ring-2 hover:ring-quantasphere-red hover:bg-surface animate-reveal-up card-hover"
+              className="bg-surface/80 p-8 rounded-2xl border border-gray-200 transition-all duration-300 hover:ring-2 hover:ring-brand hover:bg-surface animate-reveal-up card-hover"
               style={{ animationDelay: `${(i + 1) * 200}ms` }}
             >
               <div className="flex items-center gap-4 mb-4">
-                <div className="p-3 bg-quantasphere-red-100 rounded-lg">
-                  <card.icon className="w-8 h-8 text-quantasphere-red" />
+                <div className="p-3 bg-brand-100 rounded-lg">
+                  <card.icon className="w-8 h-8 text-brand" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900">{card.title}</h3>
               </div>

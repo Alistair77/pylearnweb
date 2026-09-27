@@ -45,7 +45,7 @@ export function ProblemSection() {
               style={{ animationDelay: `${(index + 1) * 120}ms` }}
             >
               <div className="md:col-span-5 flex items-start gap-4">
-                <span className="flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-quantasphere-red-50 text-quantasphere-red transition-transform duration-300 group-hover:-translate-y-1">
+                <span className="flex h-11 w-11 flex-none items-center justify-center rounded-xl bg-brand-50 text-brand transition-transform duration-300 group-hover:-translate-y-1">
                   <problem.icon className="w-5 h-5" strokeWidth={1.5} />
                 </span>
                 <h3 className="pt-1.5 text-xl md:text-2xl font-semibold text-gray-900 tracking-tight leading-snug text-balance">
@@ -65,7 +65,7 @@ export function ProblemSection() {
           <button
             type="button"
             onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
-            className="group inline-flex items-center gap-2 text-base font-semibold text-gray-900 hover:text-quantasphere-red transition-colors active:translate-y-px"
+            className="group inline-flex items-center gap-2 text-base font-semibold text-gray-900 hover:text-brand transition-colors active:translate-y-px"
           >
             See how PyLearnWeb is different
             <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />

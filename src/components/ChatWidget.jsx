@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageSquare, Minimize2, ExternalLink, Send, Bot, User } from 'lucide-react';
+import { MessageSquare, Minimize2, Send, Bot, User } from 'lucide-react';
 import logoImg from '../assets/images/logo.svg';
 import { Button } from './ui/button';
 
@@ -75,17 +75,13 @@ export default function ChatWidget() {
     }, 1200);
   };
 
-  const handleOpenAssistant = () => {
-    window.open('/Assistant', '_blank');
-  };
-
   return (
     <>
       <AnimatePresence>
         {!isOpen && (
           <motion.button
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-5 py-3 rounded-full bg-quantasphere-red text-white shadow-lg hover:bg-quantasphere-red-hover transition-colors cursor-pointer border-0"
+            className="fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-5 py-3 rounded-full bg-brand text-white shadow-lg hover:bg-brand-hover transition-colors cursor-pointer border-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
@@ -116,14 +112,6 @@ export default function ChatWidget() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={handleOpenAssistant}
-                  className="h-8 w-8 text-gray-400 hover:text-white hover:bg-neutral-800 border-0 bg-transparent"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
                   onClick={() => setIsOpen(false)}
                   className="h-8 w-8 text-gray-400 hover:text-white hover:bg-neutral-800 border-0 bg-transparent"
                 >
@@ -142,14 +130,14 @@ export default function ChatWidget() {
                   }`}
                 >
                   {msg.role !== 'user' && (
-                    <div className="w-8 h-8 rounded-full bg-quantasphere-red/15 flex items-center justify-center border border-quantasphere-red/30 flex-shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-brand/15 flex items-center justify-center border border-brand/30 flex-shrink-0">
                       <Bot className="w-4 h-4 text-accent-on-dark" />
                     </div>
                   )}
                   <div
                     className={`max-w-[75%] rounded-2xl p-3 text-sm leading-relaxed ${
                       msg.role === 'user'
-                        ? 'bg-quantasphere-red text-white rounded-tr-none'
+                        ? 'bg-brand text-white rounded-tr-none'
                         : 'bg-neutral-800 text-gray-200 rounded-tl-none border border-neutral-700'
                     }`}
                   >
@@ -164,7 +152,7 @@ export default function ChatWidget() {
               ))}
               {loading && (
                 <div className="flex items-start gap-2.5 justify-start">
-                  <div className="w-8 h-8 rounded-full bg-quantasphere-red/15 flex items-center justify-center border border-quantasphere-red/30 flex-shrink-0">
+                  <div className="w-8 h-8 rounded-full bg-brand/15 flex items-center justify-center border border-brand/30 flex-shrink-0">
                     <Bot className="w-4 h-4 text-accent-on-dark" />
                   </div>
                   <div className="bg-neutral-800 text-gray-400 rounded-2xl rounded-tl-none p-3 text-sm border border-neutral-700 flex gap-1 items-center">
@@ -187,13 +175,13 @@ export default function ChatWidget() {
                 placeholder="Ask a question..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="flex-grow bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-quantasphere-red focus:border-quantasphere-red transition-all"
+                className="flex-grow bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand transition-all"
               />
               <Button
                 type="submit"
                 size="icon"
                 disabled={!input.trim() || loading}
-                className="bg-quantasphere-red hover:bg-quantasphere-red-hover text-white rounded-lg w-9 h-9 border-0 cursor-pointer flex items-center justify-center flex-shrink-0"
+                className="bg-brand hover:bg-brand-hover text-white rounded-lg w-9 h-9 border-0 cursor-pointer flex items-center justify-center flex-shrink-0"
               >
                 <Send className="w-4 h-4" />
               </Button>

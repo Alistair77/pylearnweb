@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Outlet, Navigate, useLocation } from 'react-router-dom';
 
 // Components
 import { Navigation5 } from '@/components/watermelon-ui/navigation-5';
@@ -9,18 +9,6 @@ import ChatWidget from './components/ChatWidget';
 
 // Pages
 import Home from './pages/Home';
-import Science from './pages/Science';
-import WhyItWorks from './pages/WhyItWorks';
-import VisionMission from './pages/VisionMission';
-import Industries from './pages/Industries';
-import Problem from './pages/Problem';
-import Genomics from './pages/Genomics';
-import { QShieldTrustless, QShieldEmbedded, QShieldLite } from './pages/ProductTemplate';
-import FinancialServices from './pages/FinancialServices';
-import Healthcare from './pages/Healthcare';
-import Government from './pages/Government';
-import Energy from './pages/Energy';
-import Assistant from './pages/Assistant';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -57,20 +45,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/Home" element={<Home />} />
-          <Route path="/Science" element={<Science />} />
-          <Route path="/WhyItWorks" element={<WhyItWorks />} />
-          <Route path="/VisionMission" element={<VisionMission />} />
-          <Route path="/Industries" element={<Industries />} />
-          <Route path="/Problem" element={<Problem />} />
-          <Route path="/Genomics" element={<Genomics />} />
-          <Route path="/QShieldTrustless" element={<QShieldTrustless />} />
-          <Route path="/QShieldEmbedded" element={<QShieldEmbedded />} />
-          <Route path="/QShieldLite" element={<QShieldLite />} />
-          <Route path="/FinancialServices" element={<FinancialServices />} />
-          <Route path="/Healthcare" element={<Healthcare />} />
-          <Route path="/Government" element={<Government />} />
-          <Route path="/Energy" element={<Energy />} />
-          <Route path="/Assistant" element={<Assistant />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
     </BrowserRouter>

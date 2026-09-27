@@ -1,5 +1,5 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Lightformer, Line, useGLTF } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
@@ -296,8 +296,32 @@ function RadialGlow({ position = [0, 0, 0], scale = 1, color = '#ffffff', opacit
 /* ----------------------------------------------------------------------------
    Scene + Canvas
 ---------------------------------------------------------------------------- */
-function SceneContents() {
+/* ----------------------------------------------------------------------------
+   Fit — the canvas covers the whole hero; place and scale the shield so it
+   centres in the hero's "stage" area (focus = { y, h } in canvas pixels),
+   while the strands stretch wider so they still reach the screen edges.
+---------------------------------------------------------------------------- */
+const CAMERA_Z = 9;
+const FOV = 40;
+const VIEW_H = 2 * CAMERA_Z * Math.tan(((FOV / 2) * Math.PI) / 180); // world units visible at z=0
+// Fit the shield + podium (the faint glass orb may rise behind the copy)
+const SCENE_H = 4.6; // shield top to podium base, padded for the podium rim projecting lower in perspective
+const SCENE_W = 4.6; // podium plus most of the orb
+const SCENE_MID = -0.45; // vertical centre of that box
+
+function useFit(focus) {
+  const { size } = useThree();
+  const unit = VIEW_H / size.height; // world units per pixel
+  const f = focus ?? { y: size.height / 2, h: size.height };
+  const s = Math.min(1, (f.h * 0.82 * unit) / SCENE_H, (size.width * 0.9 * unit) / SCENE_W);
+  const y = (size.height / 2 - f.y) * unit - SCENE_MID * s;
+  const sx = Math.max(s, (size.width * unit) / 2 / 6.8); // strands start ~7.4 out: push them past the edge
+  return { s, y, sx };
+}
+
+function SceneContents({ focus }) {
   const isDark = useIsDark();
+  const { s, y, sx } = useFit(focus);
   return (
     <>
       <ambientLight intensity={0.65} />
@@ -305,7 +329,6 @@ function SceneContents() {
       <directionalLight position={[-5, 2, 3]} intensity={0.5} color={'#e6eefa'} />
       <pointLight position={[0, 0.4, -2.2]} intensity={4} distance={12} color={'#ffffff'} />
 
-      <RadialGlow position={[0, 0.15, -1.1]} scale={7} color={'#ffffff'} opacity={isDark ? 0.05 : 0.4} />
 
       <Environment resolution={256} frames={1}>
         <Lightformer intensity={2.2} position={[0, 3, 4]} scale={[10, 10, 1]} />
@@ -314,11 +337,20 @@ function SceneContents() {
         <Lightformer intensity={0.8} position={[0, -3, 2]} scale={[10, 4, 1]} color={'#eef1f4'} />
       </Environment>
 
-      <StreamField side="left" isDark={isDark} />
-      <Orb isDark={isDark} />
-      <Podium />
-      <ShieldModel isDark={isDark} />
-      <StreamField side="right" isDark={isDark} />
+      <group position={[0, y, 0]}>
+        <group scale={[sx, s, s]}>
+          <StreamField side="left" isDark={isDark} />
+        </group>
+        <group scale={s}>
+          <RadialGlow position={[0, 0.15, -1.1]} scale={7} color={'#ffffff'} opacity={isDark ? 0.05 : 0.4} />
+          <Orb isDark={isDark} />
+          <Podium />
+          <ShieldModel isDark={isDark} />
+        </group>
+        <group scale={[sx, s, s]}>
+          <StreamField side="right" isDark={isDark} />
+        </group>
+      </group>
 
       <EffectComposer disableNormalPass>
         <Bloom luminanceThreshold={1.0} intensity={0.95} mipmapBlur radius={0.75} />
@@ -327,12 +359,14 @@ function SceneContents() {
   );
 }
 
-export default function QuantumScene() {
+export default function QuantumScene({ focus, eventSource }) {
   return (
     <Canvas
-      dpr={[1, 1.8]}
+      dpr={[1, 1.5]}
+      eventSource={eventSource}
+      eventPrefix="client"
       gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}
-      camera={{ position: [0, 0, 9], fov: 40 }}
+      camera={{ position: [0, 0, CAMERA_Z], fov: FOV }}
       onCreated={({ gl }) => {
         gl.toneMapping = THREE.ACESFilmicToneMapping;
         gl.toneMappingExposure = 1.05;
@@ -340,7 +374,7 @@ export default function QuantumScene() {
       style={{ width: '100%', height: '100%' }}
     >
       <Suspense fallback={null}>
-        <SceneContents />
+        <SceneContents focus={focus} />
       </Suspense>
     </Canvas>
   );
