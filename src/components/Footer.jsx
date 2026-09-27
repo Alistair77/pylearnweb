@@ -24,7 +24,7 @@ export default function Footer() {
           {/* Logo and blurb */}
           <div className="flex-shrink-0 max-w-sm">
             <div className="flex items-center gap-3">
-              <img src={footerLogoImg} alt="PythonSphere Logo" className="h-8 w-auto object-contain" />
+              <img src={footerLogoImg} alt="PyLearnWeb Logo" className="h-8 w-auto object-contain" />
             </div>
             <p className="mt-4 text-sm text-zinc-500">
               Making Python approachable, one project at a time.
@@ -129,7 +129,7 @@ export default function Footer() {
 
         {/* Bottom Socials and Copyright */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
-          <p>© {new Date().getFullYear()} PythonSphere. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} PyLearnWeb. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <a
               href="#"

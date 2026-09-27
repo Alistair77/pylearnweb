@@ -15,10 +15,10 @@ const solutionCards = [
 
 export function SolutionSection() {
   return (
-    <section id="two-pronged-approach" className="py-28 md:py-40 px-6 bg-white/80 backdrop-blur-md">
+    <section id="two-pronged-approach" className="py-28 md:py-40 px-6 bg-surface/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16 animate-reveal-up">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight">How PythonSphere Teaches</h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight">How PyLearnWeb Teaches</h2>
           <p className="mt-4 text-lg text-gray-500 max-w-3xl mx-auto">
             We combine structured curriculum with real feedback — the two things most Python resources skip.
           </p>
@@ -28,7 +28,7 @@ export function SolutionSection() {
           {solutionCards.map((card, i) => (
             <div
               key={card.title}
-              className="bg-white/80 p-8 rounded-2xl border border-gray-200 transition-all duration-300 hover:ring-2 hover:ring-quantasphere-red hover:bg-white animate-reveal-up card-hover"
+              className="bg-surface/80 p-8 rounded-2xl border border-gray-200 transition-all duration-300 hover:ring-2 hover:ring-quantasphere-red hover:bg-surface animate-reveal-up card-hover"
               style={{ animationDelay: `${(i + 1) * 200}ms` }}
             >
               <div className="flex items-center gap-4 mb-4">
@@ -44,10 +44,11 @@ export function SolutionSection() {
 
         <div className="max-w-6xl mx-auto animate-reveal-up delay-400">
           <div className="text-center mb-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-tight">The PythonSphere Learning Engine</h3>
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-tight">The PyLearnWeb Learning Engine</h3>
           </div>
 
-          <svg viewBox="0 0 1200 550" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+          <div className="-mx-6 overflow-x-auto px-6 md:mx-0 md:px-0">
+          <svg viewBox="0 0 1200 550" xmlns="http://www.w3.org/2000/svg" className="learning-diagram w-full min-w-[760px] h-auto md:min-w-0">
             <defs>
               <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="8" refY="3.5" orient="auto">
                 <polygon points="0 0, 10 3.5, 0 7" fill="#4b5563" />
@@ -73,7 +74,7 @@ export function SolutionSection() {
             {/* Curriculum Engine Card */}
             <g filter="url(#shadow)">
               <rect x="50" y="20" width="520" height="350" fill="white" stroke="#e5e7eb" strokeWidth="1.5" rx="16" />
-              <rect x="50" y="20" width="520" height="50" fill="#1f2937" rx="16 16 0 0" />
+              <rect x="50" y="20" width="520" height="50" fill="#1f2937" rx="16" />
               <text x="310" y="52" textAnchor="middle" fontSize="20" fontWeight="600" fill="white" fontFamily="sans-serif">
                 Curriculum Engine — Structured Path
               </text>
@@ -107,7 +108,7 @@ export function SolutionSection() {
             {/* Practice Engine Card */}
             <g filter="url(#shadow)">
               <rect x="630" y="20" width="520" height="350" fill="white" stroke="#e5e7eb" strokeWidth="1.5" rx="16" />
-              <rect x="630" y="20" width="520" height="50" fill="#dc2626" rx="16 16 0 0" />
+              <rect x="630" y="20" width="520" height="50" fill="#dc2626" rx="16" />
               <text x="890" y="52" textAnchor="middle" fontSize="20" fontWeight="600" fill="white" fontFamily="sans-serif">
                 Practice Engine — Code Review
               </text>
@@ -143,6 +144,7 @@ export function SolutionSection() {
             <rect x="500" y="470" width="200" height="40" fill="#1f2937" rx="20" />
             <text x="600" y="495" textAnchor="middle" fontSize="14" fontWeight="500" fill="white" fontFamily="sans-serif">Skill Mastery</text>
           </svg>
+          </div>
         </div>
       </div>
     </section>

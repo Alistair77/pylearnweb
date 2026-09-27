@@ -15,32 +15,32 @@ const milestoneTile = (from, to) =>
   )}`;
 
 const leadership = [
-  { id: 'maya-chen', name: 'Maya Chen', role: 'Co-Founder & CEO', image: initialsAvatar('MC', '#dc2626') },
-  { id: 'daniel-osei', name: 'Daniel Osei', role: 'Co-Founder & CTO', image: initialsAvatar('DO', '#1f2937') },
-  { id: 'priya-nair', name: 'Priya Nair', role: 'Co-Founder & Head of Curriculum', image: initialsAvatar('PN', '#374151') },
+  { id: 'maya-chen', name: 'Maya Chen', role: 'Co-Founder & CEO', image: initialsAvatar('MC', '#0353a4') },
+  { id: 'daniel-osei', name: 'Daniel Osei', role: 'Co-Founder & CTO', image: initialsAvatar('DO', '#12263a') },
+  { id: 'priya-nair', name: 'Priya Nair', role: 'Co-Founder & Head of Curriculum', image: initialsAvatar('PN', '#2f5d8a') },
 ];
 
 const awards = [
   {
     title: '50,000+ Learners Milestone',
-    description: "Crossed 50,000 active learners building real Python skills through PythonSphere's project-based curriculum.",
-    image: milestoneTile('#dc2626', '#7f1d1d'),
+    description: "Crossed 50,000 active learners building real Python skills through PyLearnWeb's project-based curriculum.",
+    image: milestoneTile('#0353a4', '#12263a'),
   },
   {
     title: 'Featured in Developer Weekly',
     description: 'Recognized by Developer Weekly for our practical, project-first approach to teaching Python.',
-    image: milestoneTile('#1f2937', '#0f172a'),
+    image: milestoneTile('#12263a', '#0b1a29'),
   },
   {
     title: 'Top-Rated Learning Platform',
     description: "Rated among the top Python learning platforms by our own community of learners and mentors.",
-    image: milestoneTile('#374151', '#111827'),
+    image: milestoneTile('#2f5d8a', '#12263a'),
   },
 ];
 
 export function AboutSection() {
   return (
-    <section id="about" className="py-28 md:py-40 px-6 bg-white/80 backdrop-blur-md">
+    <section id="about" className="py-28 md:py-40 px-6 bg-surface/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-16 md:mb-20 animate-reveal-up">
           <div className="lg:col-span-7">

@@ -41,7 +41,7 @@ export function ProblemSection() {
           {problems.map((problem, index) => (
             <div
               key={problem.title}
-              className="group grid md:grid-cols-12 gap-4 md:gap-10 items-start py-8 md:py-10 border-b border-gray-200 transition-colors duration-300 hover:bg-white/60 animate-reveal-up"
+              className="group grid md:grid-cols-12 gap-4 md:gap-10 items-start py-8 md:py-10 border-b border-gray-200 transition-colors duration-300 hover:bg-surface/60 animate-reveal-up"
               style={{ animationDelay: `${(index + 1) * 120}ms` }}
             >
               <div className="md:col-span-5 flex items-start gap-4">
@@ -67,7 +67,7 @@ export function ProblemSection() {
             onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
             className="group inline-flex items-center gap-2 text-base font-semibold text-gray-900 hover:text-quantasphere-red transition-colors active:translate-y-px"
           >
-            See how PythonSphere is different
+            See how PyLearnWeb is different
             <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
           </button>
         </div>

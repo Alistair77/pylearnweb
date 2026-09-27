@@ -10,7 +10,7 @@ export default function ChatWidget() {
     {
       id: '1',
       role: 'assistant',
-      content: "Hello! I'm the PythonSphere assistant. I can help you learn about our courses, learning tracks, and how the platform works. How can I assist you today?",
+      content: "Hello! I'm the PyLearnWeb assistant. I can help you learn about our courses, learning tracks, and how the platform works. How can I assist you today?",
       timestamp: new Date()
     }
   ]);
@@ -45,7 +45,7 @@ export default function ChatWidget() {
       const query = userMessage.content.toLowerCase();
 
       if (query.includes('founder') || query.includes('team') || query.includes('leader') || query.includes('who')) {
-        responseContent = `PythonSphere is built by a small independent team:
+        responseContent = `PyLearnWeb is built by a small independent team:
 - Co-Founder & CEO
 - Co-Founder & CTO
 - Co-Founder & Head of Curriculum`;
@@ -57,9 +57,9 @@ export default function ChatWidget() {
       } else if (query.includes('contact') || query.includes('email') || query.includes('support')) {
         responseContent = `You can reach us via the contact form on the home page, or submit a question here anytime!`;
       } else if (query.includes('how') || query.includes('work') || query.includes('curriculum')) {
-        responseContent = `PythonSphere pairs a structured, project-based curriculum with automated code review and mentor feedback — so every lesson ends with something real you built, checked, and understand.`;
+        responseContent = `PyLearnWeb pairs a structured, project-based curriculum with automated code review and mentor feedback — so every lesson ends with something real you built, checked, and understand.`;
       } else {
-        responseContent = `Thanks for your question! PythonSphere helps people learn Python through structured lessons and hands-on projects, with real feedback on real code. Ask me about our courses, tracks, or how the platform works.`;
+        responseContent = `Thanks for your question! PyLearnWeb helps people learn Python through structured lessons and hands-on projects, with real feedback on real code. Ask me about our courses, tracks, or how the platform works.`;
       }
 
       setMessages((prev) => [
@@ -85,7 +85,7 @@ export default function ChatWidget() {
         {!isOpen && (
           <motion.button
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-5 py-3 rounded-full bg-red-600 text-white shadow-lg hover:bg-red-700 transition-colors cursor-pointer border-0"
+            className="fixed bottom-6 right-6 z-[100] flex items-center gap-3 px-5 py-3 rounded-full bg-quantasphere-red text-white shadow-lg hover:bg-quantasphere-red-hover transition-colors cursor-pointer border-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
@@ -109,7 +109,7 @@ export default function ChatWidget() {
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-neutral-800 bg-neutral-950/80 rounded-t-2xl flex-shrink-0">
               <div className="flex items-center gap-2">
-                <img src={logoImg} alt="PythonSphere" className="h-6 w-auto object-contain" />
+                <img src={logoImg} alt="PyLearnWeb" className="h-6 w-auto object-contain" />
                 <h3 className="font-semibold text-white text-sm">AI Assistant</h3>
               </div>
               <div className="flex items-center gap-1">
@@ -142,14 +142,14 @@ export default function ChatWidget() {
                   }`}
                 >
                   {msg.role !== 'user' && (
-                    <div className="w-8 h-8 rounded-full bg-red-950 flex items-center justify-center border border-red-900 flex-shrink-0">
-                      <Bot className="w-4 h-4 text-red-500" />
+                    <div className="w-8 h-8 rounded-full bg-quantasphere-red/15 flex items-center justify-center border border-quantasphere-red/30 flex-shrink-0">
+                      <Bot className="w-4 h-4 text-accent-on-dark" />
                     </div>
                   )}
                   <div
                     className={`max-w-[75%] rounded-2xl p-3 text-sm leading-relaxed ${
                       msg.role === 'user'
-                        ? 'bg-red-600 text-white rounded-tr-none'
+                        ? 'bg-quantasphere-red text-white rounded-tr-none'
                         : 'bg-neutral-800 text-gray-200 rounded-tl-none border border-neutral-700'
                     }`}
                   >
@@ -164,8 +164,8 @@ export default function ChatWidget() {
               ))}
               {loading && (
                 <div className="flex items-start gap-2.5 justify-start">
-                  <div className="w-8 h-8 rounded-full bg-red-950 flex items-center justify-center border border-red-900 flex-shrink-0">
-                    <Bot className="w-4 h-4 text-red-500" />
+                  <div className="w-8 h-8 rounded-full bg-quantasphere-red/15 flex items-center justify-center border border-quantasphere-red/30 flex-shrink-0">
+                    <Bot className="w-4 h-4 text-accent-on-dark" />
                   </div>
                   <div className="bg-neutral-800 text-gray-400 rounded-2xl rounded-tl-none p-3 text-sm border border-neutral-700 flex gap-1 items-center">
                     <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" />
@@ -187,13 +187,13 @@ export default function ChatWidget() {
                 placeholder="Ask a question..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="flex-grow bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-red-600 focus:border-red-600 transition-all"
+                className="flex-grow bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-quantasphere-red focus:border-quantasphere-red transition-all"
               />
               <Button
                 type="submit"
                 size="icon"
                 disabled={!input.trim() || loading}
-                className="bg-red-600 hover:bg-red-700 text-white rounded-lg w-9 h-9 border-0 cursor-pointer flex items-center justify-center flex-shrink-0"
+                className="bg-quantasphere-red hover:bg-quantasphere-red-hover text-white rounded-lg w-9 h-9 border-0 cursor-pointer flex items-center justify-center flex-shrink-0"
               >
                 <Send className="w-4 h-4" />
               </Button>

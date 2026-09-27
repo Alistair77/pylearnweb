@@ -1,4 +1,4 @@
-# PythonSphere
+# PyLearnWeb
 
 A landing page template for a Python-learning platform — built with React 19, Vite, Tailwind CSS v4, and Framer Motion. Features a live Three.js hero scene, an interactive product bento grid, tilt-card team section, and a dark glassmorphism floating navbar.
 

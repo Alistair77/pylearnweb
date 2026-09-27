@@ -74,7 +74,7 @@ export function ProductsSection() {
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-12 md:mb-14 animate-reveal-up">
           <div className="lg:col-span-7">
             <h2 className="text-4xl md:text-6xl font-bold text-gray-900 tracking-tight leading-[1.04] text-balance">
-              PythonSphere Tracks
+              PyLearnWeb Tracks
             </h2>
           </div>
           <div className="lg:col-span-5 lg:pb-2">
@@ -85,7 +85,7 @@ export function ProductsSection() {
         </div>
 
         {/* Industry-aligned curriculum — bordered, icon-led callout */}
-        <div className="flex items-start gap-4 rounded-2xl border border-gray-200 bg-white/70 px-6 py-5 mb-14 max-w-4xl animate-reveal-up delay-200">
+        <div className="flex items-start gap-4 rounded-2xl border border-gray-200 bg-surface/70 px-6 py-5 mb-14 max-w-4xl animate-reveal-up delay-200">
           <span className="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-quantasphere-red-50 text-quantasphere-red">
             <Shield className="w-5 h-5" strokeWidth={1.5} />
           </span>
@@ -104,15 +104,15 @@ export function ProductsSection() {
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-[radial-gradient(closest-side,rgba(220,38,38,0.22),transparent)] opacity-70 transition-opacity duration-500 group-hover:opacity-100"
+            className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-[radial-gradient(closest-side,rgb(var(--accent-rgb)/0.22),transparent)] opacity-70 transition-opacity duration-500 group-hover:opacity-100"
           />
           <div className="relative grid md:grid-cols-2 gap-10 md:gap-14">
             <div>
               <div className="flex items-center gap-4 mb-6">
-                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 ring-1 ring-white/10 text-quantasphere-red shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 ring-1 ring-white/10 text-accent-on-dark shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
                   <ShieldGlyph id={featured.id} className="w-7 h-7" />
                 </span>
-                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-quantasphere-red">
+                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-on-dark">
                   {featured.tier}
                 </span>
               </div>
@@ -130,7 +130,7 @@ export function ProductsSection() {
                     key={ind.label}
                     className="flex items-center gap-3 rounded-xl bg-white/5 ring-1 ring-white/10 px-4 py-3 text-sm text-zinc-200"
                   >
-                    <ind.icon className="w-4 h-4 text-quantasphere-red flex-none" strokeWidth={1.5} />
+                    <ind.icon className="w-4 h-4 text-accent-on-dark flex-none" strokeWidth={1.5} />
                     {ind.label}
                   </div>
                 ))}
@@ -149,7 +149,7 @@ export function ProductsSection() {
             <a
               key={product.id}
               href={product.href}
-              className="group flex flex-col rounded-2xl bg-white border border-gray-200 p-8 md:p-10 transition-all duration-500 hover:-translate-y-1 hover:border-quantasphere-red/40 hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.18)] active:translate-y-0 animate-reveal-up"
+              className="group flex flex-col rounded-2xl bg-surface border border-gray-200 p-8 md:p-10 transition-all duration-500 hover:-translate-y-1 hover:border-quantasphere-red/40 hover:shadow-[0_18px_40px_-24px_rgba(0,0,0,0.18)] active:translate-y-0 animate-reveal-up"
               style={{ animationDelay: `${(index + 4) * 120}ms` }}
             >
               <div className="flex items-center gap-4 mb-6">

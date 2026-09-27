@@ -161,6 +161,9 @@ export default function BackgroundCanvas() {
     }
 
     function connectLines() {
+      const rootStyle = getComputedStyle(document.documentElement);
+      const accentRgb = rootStyle.getPropertyValue('--accent-rgb').trim();
+      const lineRgb = rootStyle.getPropertyValue('--line-rgb').trim();
       for (let a = 0; a < particles.length; a++) {
         for (let b = a + 1; b < particles.length; b++) {
           let dx = particles[a].x - particles[b].x;
@@ -175,9 +178,9 @@ export default function BackgroundCanvas() {
             let distToMouseB = mouse.x && mouse.y ? Math.sqrt(Math.pow(mouse.x - particles[b].x, 2) + Math.pow(mouse.y - particles[b].y, 2)) : 1000;
 
             if (distToMouseA < mouse.radius || distToMouseB < mouse.radius) {
-              ctx.strokeStyle = `rgba(239, 68, 68, ${opacity})`; // Red lines near cursor
+              ctx.strokeStyle = `rgb(${accentRgb} / ${opacity})`; // Accent lines near cursor
             } else {
-              ctx.strokeStyle = `rgba(107, 114, 128, ${opacity})`; // Gray lines elsewhere
+              ctx.strokeStyle = `rgb(${lineRgb} / ${opacity * 0.6})`; // Soft ink lines elsewhere
             }
 
             ctx.lineWidth = 1;

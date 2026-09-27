@@ -11,7 +11,7 @@ export function ContactSection() {
           </p>
         </div>
 
-        <form className="space-y-6 bg-white/80 p-8 rounded-2xl border border-gray-200 animate-reveal-up delay-400">
+        <form className="space-y-6 bg-surface/80 p-8 rounded-2xl border border-gray-200 animate-reveal-up delay-400">
           <div className="grid md:grid-cols-2 gap-6">
             <input
               className="input-field"

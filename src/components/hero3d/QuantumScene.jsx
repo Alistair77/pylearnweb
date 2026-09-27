@@ -1,14 +1,33 @@
-import { Suspense, useMemo, useRef } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Environment, Lightformer, Line, useGLTF } from '@react-three/drei';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 import * as THREE from 'three';
 
+// Emissive accents: brighter than --accent so they glow under bloom (blue in light, violet in dark)
+const ACCENT_LIGHT = '#2f7bd0';
+const ACCENT_DARK = '#9b6cff';
+// BASE_URL keeps the model path working under the GitHub Pages sub-path
+const SHIELD_URL = `${import.meta.env.BASE_URL}models/shield.glb`;
+
+// Track the site theme (html[data-theme]) so the scene's glow and strands suit light or dark
+function useIsDark() {
+  const read = () => document.documentElement.dataset.theme === 'dark';
+  const [isDark, setIsDark] = useState(read);
+  useEffect(() => {
+    const obs = new MutationObserver(() => setIsDark(read()));
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    return () => obs.disconnect();
+  }, []);
+  return isDark;
+}
+
 /* ----------------------------------------------------------------------------
    Shield — the user-supplied .glb, given a clean glass material + red Q emblem
 ---------------------------------------------------------------------------- */
-function ShieldModel() {
-  const { scene } = useGLTF('/models/shield.glb');
+function ShieldModel({ isDark }) {
+  const ACCENT = isDark ? ACCENT_DARK : ACCENT_LIGHT;
+  const { scene } = useGLTF(SHIELD_URL);
   const group = useRef();
 
   const model = useMemo(() => {
@@ -65,26 +84,20 @@ function ShieldModel() {
   return (
     <group ref={group} position={[0, 0.15, 0]}>
       <primitive object={model} />
-      {/* glowing red Q emblem in front of the shield face */}
-      <group position={[0, 0.1, 0.42]} scale={0.9}>
-        <mesh>
-          <torusGeometry args={[0.46, 0.13, 28, 72]} />
-          <meshStandardMaterial color={'#ff2436'} emissive={'#ff0a1e'} emissiveIntensity={2.6} roughness={0.28} metalness={0.1} toneMapped={false} />
-        </mesh>
-        <mesh position={[0.34, -0.34, 0]} rotation={[0, 0, -Math.PI / 4]}>
-          <capsuleGeometry args={[0.07, 0.28, 8, 16]} />
-          <meshStandardMaterial color={'#ff2436'} emissive={'#ff0a1e'} emissiveIntensity={2.6} roughness={0.28} metalness={0.1} toneMapped={false} />
-        </mesh>
-      </group>
+      {/* single clean emblem ring on the shield face */}
+      <mesh position={[0, 0.1, 0.42]}>
+        <torusGeometry args={[0.42, 0.055, 24, 96]} />
+        <meshStandardMaterial color={ACCENT} emissive={ACCENT} emissiveIntensity={1.35} roughness={0.35} metalness={0.2} toneMapped={false} transparent />
+      </mesh>
     </group>
   );
 }
-useGLTF.preload('/models/shield.glb');
+useGLTF.preload(SHIELD_URL);
 
 /* ----------------------------------------------------------------------------
    Concentric orb rings + faint glass shell behind the shield
 ---------------------------------------------------------------------------- */
-function Orb() {
+function Orb({ isDark }) {
   return (
     <group position={[0, 0.15, -0.7]}>
       <mesh>
@@ -95,7 +108,7 @@ function Orb() {
           roughness={0.18}
           ior={1.18}
           transparent
-          opacity={0.26}
+          opacity={isDark ? 0.06 : 0.26}
           color={'#ffffff'}
           clearcoat={1}
           clearcoatRoughness={0.2}
@@ -156,8 +169,9 @@ function Podium() {
    Left  = dark threats funnelling IN and behind the shield.
    Right = clean red light fanning OUT from behind the shield.
 ---------------------------------------------------------------------------- */
-function StreamField({ side }) {
+function StreamField({ side, isDark }) {
   const isRed = side === 'right';
+  const ACCENT = isDark ? ACCENT_DARK : ACCENT_LIGHT;
   const N = 14; // strands
   const DOTS = 9; // nodes per strand
   const speed = isRed ? 0.11 : 0.085;
@@ -230,7 +244,7 @@ function StreamField({ side }) {
         <Line
           key={i}
           points={pts}
-          color={isRed ? '#ff3a48' : '#3a3f47'}
+          color={isRed ? ACCENT : (isDark ? '#6f6890' : '#12263a')}
           lineWidth={isRed ? 1.1 : 1}
           transparent
           opacity={isRed ? 0.45 : 0.3}
@@ -243,7 +257,7 @@ function StreamField({ side }) {
         <pointsMaterial
           size={isRed ? 0.085 : 0.12}
           sizeAttenuation
-          color={isRed ? '#ff2a3a' : '#1c2026'}
+          color={isRed ? ACCENT : (isDark ? '#a49ec4' : '#12263a')}
           transparent
           opacity={isRed ? 1 : 0.92}
           depthWrite={false}
@@ -283,28 +297,28 @@ function RadialGlow({ position = [0, 0, 0], scale = 1, color = '#ffffff', opacit
    Scene + Canvas
 ---------------------------------------------------------------------------- */
 function SceneContents() {
+  const isDark = useIsDark();
   return (
     <>
       <ambientLight intensity={0.65} />
       <directionalLight position={[4, 6, 5]} intensity={1.3} />
-      <directionalLight position={[-5, 2, 3]} intensity={0.5} color={'#ffe3e3'} />
+      <directionalLight position={[-5, 2, 3]} intensity={0.5} color={'#e6eefa'} />
       <pointLight position={[0, 0.4, -2.2]} intensity={4} distance={12} color={'#ffffff'} />
 
-      <RadialGlow position={[0, 0.15, -1.1]} scale={7} color={'#ffffff'} opacity={0.4} />
-      <RadialGlow position={[0, 0.2, 0.2]} scale={2.7} color={'#ff2f3e'} opacity={0.55} />
+      <RadialGlow position={[0, 0.15, -1.1]} scale={7} color={'#ffffff'} opacity={isDark ? 0.05 : 0.4} />
 
       <Environment resolution={256} frames={1}>
         <Lightformer intensity={2.2} position={[0, 3, 4]} scale={[10, 10, 1]} />
         <Lightformer intensity={1.1} position={[-5, 1, 2]} scale={[4, 10, 1]} color={'#ffffff'} />
-        <Lightformer intensity={1.4} position={[5, 1, 2]} scale={[4, 10, 1]} color={'#ffd9d9'} />
+        <Lightformer intensity={1.4} position={[5, 1, 2]} scale={[4, 10, 1]} color={'#dde8f7'} />
         <Lightformer intensity={0.8} position={[0, -3, 2]} scale={[10, 4, 1]} color={'#eef1f4'} />
       </Environment>
 
-      <StreamField side="left" />
-      <Orb />
+      <StreamField side="left" isDark={isDark} />
+      <Orb isDark={isDark} />
       <Podium />
-      <ShieldModel />
-      <StreamField side="right" />
+      <ShieldModel isDark={isDark} />
+      <StreamField side="right" isDark={isDark} />
 
       <EffectComposer disableNormalPass>
         <Bloom luminanceThreshold={1.0} intensity={0.95} mipmapBlur radius={0.75} />

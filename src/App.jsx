@@ -37,7 +37,7 @@ function Layout() {
   const isHome = location.pathname === '/' || location.pathname === '/Home';
 
   return (
-    <div className="relative isolate min-h-screen flex flex-col transition-colors duration-300 bg-white text-gray-900">
+    <div className="relative isolate min-h-screen flex flex-col transition-colors duration-300 bg-page text-gray-900">
       {isHome && <BackgroundCanvas />}
       <Navigation5 />
       <main className="relative z-10 flex-grow">
@@ -51,7 +51,7 @@ function Layout() {
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <ScrollToTop />
       <Routes>
         <Route element={<Layout />}>

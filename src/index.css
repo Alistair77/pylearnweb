@@ -1,12 +1,11 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
 
 @custom-variant dark (&:is(.dark *));
 
 /* ============================================================================
-   QUANTASPHERE DESIGN SYSTEM - Unified Visual Language
+   PYLEARNWEB DESIGN SYSTEM - Unified Visual Language
    ============================================================================ */
 
 /* --- Spacing Scale (4px base unit) --- */
@@ -82,10 +81,10 @@
   --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   --shadow-inner: inset 0 2px 4px 0 rgb(0 0 0 / 0.05);
-  --shadow-focus: 0 0 0 3px rgb(220 38 38 / 0.4);
+  --shadow-focus: 0 0 0 3px rgb(var(--accent-rgb) / 0.4);
   --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.08);
-  --shadow-card-hover: 0 10px 25px -3px rgb(220 38 38 / 0.15), 0 4px 6px -4px rgb(220 38 38 / 0.1);
-  --shadow-glow-red: 0 0 20px rgb(220 38 38 / 0.3);
+  --shadow-card-hover: 0 10px 25px -3px rgb(var(--accent-rgb) / 0.15), 0 4px 6px -4px rgb(var(--accent-rgb) / 0.1);
+  --shadow-glow-red: 0 0 20px rgb(var(--accent-rgb) / 0.3);
 }
 
 /* --- Transition System --- */
@@ -143,11 +142,60 @@
   --font-sans: Inter, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
   --font-display: Inter, system-ui, sans-serif;
-  --color-quantasphere-red: #dc2626;
-  --color-quantasphere-red-hover: #b91c1c;
-  --color-quantasphere-red-light: #fef2f2;
-  --color-quantasphere-red-100: #fee2e2;
-  --color-quantasphere-red-50: #fef2f2;
+  /* Accent + surfaces resolve to runtime tokens so light/dark flip together */
+  --color-quantasphere-red: var(--accent);
+  --color-quantasphere-red-hover: var(--accent-hover);
+  --color-quantasphere-red-light: var(--accent-softer);
+  --color-quantasphere-red-100: var(--accent-soft);
+  --color-quantasphere-red-50: var(--accent-softer);
+  --color-accent-on-dark: var(--accent-on-dark);
+  --color-surface: var(--surface);
+  --color-page: var(--bg);
+  /* One warm-neutral scale for every gray on the site (replaces Tailwind's blue-tinted gray) */
+  --color-gray-50: var(--g-50);
+  --color-gray-100: var(--g-100);
+  --color-gray-200: var(--g-200);
+  --color-gray-300: var(--g-300);
+  --color-gray-400: var(--g-400);
+  --color-gray-500: var(--g-500);
+  --color-gray-600: var(--g-600);
+  --color-gray-700: var(--g-700);
+  --color-gray-800: var(--g-800);
+  --color-gray-900: var(--g-900);
+  --color-gray-950: var(--g-950);
+  /* Legacy Tailwind reds (subpages) resolve to the brand accent */
+  --color-red-50: var(--accent-softer);
+  --color-red-100: var(--accent-soft);
+  --color-red-200: var(--accent-soft);
+  --color-red-300: var(--accent-soft);
+  --color-red-400: var(--accent);
+  --color-red-500: var(--accent);
+  --color-red-600: var(--accent);
+  --color-red-700: var(--accent-hover);
+  --color-red-800: var(--accent-hover);
+  /* Dark chrome (nav, footer, chat) uses neutral/zinc: navy in light, violet in dark */
+  --color-neutral-50: var(--n-50);
+  --color-zinc-50: var(--n-50);
+  --color-neutral-100: var(--n-100);
+  --color-zinc-100: var(--n-100);
+  --color-neutral-200: var(--n-200);
+  --color-zinc-200: var(--n-200);
+  --color-neutral-300: var(--n-300);
+  --color-zinc-300: var(--n-300);
+  --color-neutral-400: var(--n-400);
+  --color-zinc-400: var(--n-400);
+  --color-neutral-500: var(--n-500);
+  --color-zinc-500: var(--n-500);
+  --color-neutral-600: var(--n-600);
+  --color-zinc-600: var(--n-600);
+  --color-neutral-700: var(--n-700);
+  --color-zinc-700: var(--n-700);
+  --color-neutral-800: var(--n-800);
+  --color-zinc-800: var(--n-800);
+  --color-neutral-900: var(--n-900);
+  --color-zinc-900: var(--n-900);
+  --color-neutral-950: var(--n-950);
+  --color-zinc-950: var(--n-950);
   --color-quantasphere-navy: #0f172a;
   --color-quantasphere-navy-light: #1e293b;
 }
@@ -201,7 +249,7 @@
   .delay-900 { animation-delay: 900ms; }
   .delay-1000 { animation-delay: 1000ms; }
   .glass {
-    @apply bg-white/80 backdrop-blur-md;
+    @apply bg-surface/80 backdrop-blur-md;
   }
   .glass-dark {
     @apply bg-neutral-950/80 backdrop-blur-md;
@@ -213,7 +261,7 @@
     @apply inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 shadow h-10 rounded-md bg-quantasphere-red hover:bg-quantasphere-red-hover text-white font-semibold px-8 py-3;
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border shadow-sm h-10 rounded-md border-gray-300 bg-white/50 backdrop-blur-sm text-gray-700 hover:bg-gray-100 hover:text-gray-800 hover:border-gray-400 font-semibold px-8 py-3;
+    @apply inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border shadow-sm h-10 rounded-md border-gray-300 bg-surface/50 backdrop-blur-sm text-gray-700 hover:bg-gray-100 hover:text-gray-800 hover:border-gray-400 font-semibold px-8 py-3;
   }
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-3 py-2 text-sm font-medium transition-colors duration-300 text-gray-400 hover:text-white;
@@ -382,3 +430,112 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 }
+/* ============================================================================
+   THEME TOKENS — light (default) and dark. Every gray, surface and the accent
+   on the homepage reads from these, so both modes stay one continuous palette.
+   ============================================================================ */
+/* Light — brand palette: #F5F8FF page, #12263A ink, #0353A4 accent, #B9D6F2 soft accent */
+:root {
+  color-scheme: light;
+  --bg: #f5f8ff;
+  --surface: #ffffff;
+  --hero-glow: #e3eefa;
+  --accent: #0353a4;
+  --accent-hover: #02427f;
+  --accent-soft: #b9d6f2;
+  --accent-softer: #e3eefa;
+  --accent-on-dark: #b9d6f2;        /* accent text/icons on always-dark chrome */
+  --accent-rgb: 3 83 164;           /* for canvas/3D code that needs raw channels */
+  --line-rgb: 18 38 58;
+  /* navy-tinted neutral scale; 900 is the brand ink #12263A */
+  --g-50: oklch(0.975 0.008 250);
+  --g-100: oklch(0.955 0.012 250);
+  --g-200: oklch(0.915 0.016 250);
+  --g-300: oklch(0.86 0.02 250);
+  --g-400: oklch(0.71 0.024 250);
+  --g-500: oklch(0.54 0.03 250);
+  --g-600: oklch(0.455 0.035 250);
+  --g-700: oklch(0.375 0.04 250);
+  --g-800: oklch(0.31 0.045 250);
+  --g-900: #12263a;
+  --g-950: #0b1a29;
+  /* fixed-direction scale for always-dark chrome (nav pill, footer, chat) */
+  --n-50: oklch(0.975 0.008 250);
+  --n-100: oklch(0.955 0.012 250);
+  --n-200: oklch(0.915 0.016 250);
+  --n-300: oklch(0.86 0.02 250);
+  --n-400: oklch(0.71 0.024 250);
+  --n-500: oklch(0.56 0.03 250);
+  --n-600: oklch(0.455 0.035 250);
+  --n-700: oklch(0.375 0.04 250);
+  --n-800: oklch(0.3 0.045 250);
+  --n-900: #12263a;
+  --n-950: #0b1a29;
+}
+
+/* Dark — deep violet night with a lavender-violet accent */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: oklch(0.17 0.04 292);
+  --surface: oklch(0.205 0.045 292);
+  --hero-glow: oklch(0.27 0.08 295);
+  --accent: oklch(0.6 0.19 295);         /* #8b61e3: 4.3:1 with white text, 4.5:1 on --bg */
+  --accent-hover: oklch(0.66 0.17 295);
+  --accent-soft: oklch(0.3 0.09 295);
+  --accent-softer: oklch(0.245 0.065 295);
+  --accent-on-dark: oklch(0.76 0.12 295);
+  --accent-rgb: 139 97 227;
+  --line-rgb: 164 158 196;
+  --g-50: oklch(0.19 0.03 292);
+  --g-100: oklch(0.225 0.035 292);
+  --g-200: oklch(0.285 0.035 292);
+  --g-300: oklch(0.35 0.035 292);
+  --g-400: oklch(0.5 0.03 292);
+  --g-500: oklch(0.64 0.025 292);
+  --g-600: oklch(0.72 0.022 292);
+  --g-700: oklch(0.8 0.018 292);
+  --g-800: oklch(0.88 0.014 292);
+  --g-900: oklch(0.94 0.01 292);
+  --g-950: oklch(0.97 0.008 292);
+  --n-50: oklch(0.97 0.008 292);
+  --n-100: oklch(0.94 0.012 292);
+  --n-200: oklch(0.88 0.016 292);
+  --n-300: oklch(0.8 0.02 292);
+  --n-400: oklch(0.7 0.024 292);
+  --n-500: oklch(0.56 0.03 292);
+  --n-600: oklch(0.45 0.04 292);
+  --n-700: oklch(0.35 0.05 292);
+  --n-800: oklch(0.27 0.055 292);
+  --n-900: oklch(0.21 0.05 292);
+  --n-950: oklch(0.15 0.04 292);
+}
+
+/* Inline SVGs still carry the old hard-coded reds — repaint them with the accent */
+[fill='#ef4444'], [fill='#dc2626'], [fill='#f87171'] { fill: var(--accent); }
+[stroke='#ef4444'], [stroke='#dc2626'] { stroke: var(--accent); }
+[stop-color='#ef4444'] { stop-color: var(--accent); }
+[stop-color='#b91c1c'] { stop-color: var(--accent-hover); }
+[flood-color='#ef4444'] { flood-color: var(--accent); }
+
+body {
+  background-color: var(--bg);
+  color: var(--g-900);
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+/* Learning-engine diagram: map its hard-coded SVG fills onto the theme tokens */
+.learning-diagram rect[fill='white'] { fill: var(--surface); }
+.learning-diagram rect[fill='#f9fafb'] { fill: var(--g-100); }
+.learning-diagram [stroke='#e5e7eb'] { stroke: var(--g-200); }
+.learning-diagram text[fill='#374151'] { fill: var(--g-700); }
+.learning-diagram text[fill='#4b5563'] { fill: var(--g-600); }
+.learning-diagram text[fill='#6b7280'] { fill: var(--g-500); }
+.learning-diagram [fill='#ef4444'],
+.learning-diagram [fill='#dc2626'] { fill: var(--accent); }
+.learning-diagram [stroke='#ef4444'] { stroke: var(--accent); }
+.learning-diagram polygon[fill='#4b5563'] { fill: var(--g-500); }
+.learning-diagram [stroke='#9ca3af'],
+.learning-diagram [stroke='#4b5563'] { stroke: var(--g-400); }
+.learning-diagram [fill='#1f2937'] { fill: oklch(0.27 0.007 60); }
+.learning-diagram circle[fill='#374151'] { fill: oklch(0.37 0.008 60); }
+.learning-diagram rect[fill='#6b7280'] { fill: oklch(0.52 0.009 60); }
