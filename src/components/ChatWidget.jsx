@@ -4,6 +4,19 @@ import { MessageSquare, Minimize2, Send, Bot, User } from 'lucide-react';
 import logoImg from '../assets/images/logo.svg';
 import { Button } from './ui/button';
 
+/* Canned replies use **bold** markers; render them as <strong>, everything else as plain text */
+function formatReply(text) {
+  return text.split('**').map((part, i) =>
+    i % 2 ? (
+      <strong key={i} className="font-semibold text-zinc-50">
+        {part}
+      </strong>
+    ) : (
+      part
+    ),
+  );
+}
+
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
@@ -113,7 +126,7 @@ export default function ChatWidget() {
                   variant="ghost"
                   size="icon"
                   onClick={() => setIsOpen(false)}
-                  className="h-8 w-8 text-gray-400 hover:text-white hover:bg-neutral-800 border-0 bg-transparent"
+                  className="h-8 w-8 text-zinc-400 hover:text-white hover:bg-neutral-800 border-0 bg-transparent"
                 >
                   <Minimize2 className="h-4 w-4" />
                 </Button>
@@ -135,17 +148,17 @@ export default function ChatWidget() {
                     </div>
                   )}
                   <div
-                    className={`max-w-[75%] rounded-2xl p-3 text-sm leading-relaxed ${
+                    className={`max-w-[75%] whitespace-pre-line rounded-2xl p-3 text-sm leading-relaxed ${
                       msg.role === 'user'
                         ? 'bg-brand text-white rounded-tr-none'
-                        : 'bg-neutral-800 text-gray-200 rounded-tl-none border border-neutral-700'
+                        : 'bg-neutral-800 text-zinc-200 rounded-tl-none border border-neutral-700'
                     }`}
                   >
-                    {msg.content}
+                    {msg.role === 'user' ? msg.content : formatReply(msg.content)}
                   </div>
                   {msg.role === 'user' && (
                     <div className="w-8 h-8 rounded-full bg-neutral-800 flex items-center justify-center border border-neutral-700 flex-shrink-0">
-                      <User className="w-4 h-4 text-gray-400" />
+                      <User className="w-4 h-4 text-zinc-400" />
                     </div>
                   )}
                 </div>
@@ -155,10 +168,10 @@ export default function ChatWidget() {
                   <div className="w-8 h-8 rounded-full bg-brand/15 flex items-center justify-center border border-brand/30 flex-shrink-0">
                     <Bot className="w-4 h-4 text-accent-on-dark" />
                   </div>
-                  <div className="bg-neutral-800 text-gray-400 rounded-2xl rounded-tl-none p-3 text-sm border border-neutral-700 flex gap-1 items-center">
-                    <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce" />
-                    <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce delay-100" />
-                    <span className="w-1.5 h-1.5 bg-gray-500 rounded-full animate-bounce delay-200" />
+                  <div className="bg-neutral-800 text-zinc-400 rounded-2xl rounded-tl-none p-3 text-sm border border-neutral-700 flex gap-1 items-center">
+                    <span className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce" />
+                    <span className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce delay-100" />
+                    <span className="w-1.5 h-1.5 bg-zinc-500 rounded-full animate-bounce delay-200" />
                   </div>
                 </div>
               )}
@@ -175,7 +188,7 @@ export default function ChatWidget() {
                 placeholder="Ask a question..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                className="flex-grow bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand transition-all"
+                className="flex-grow bg-neutral-900 border border-neutral-800 rounded-lg px-4 py-2 text-sm text-white placeholder:text-zinc-500 focus:outline-none focus:ring-1 focus:ring-brand focus:border-brand transition-all"
               />
               <Button
                 type="submit"
