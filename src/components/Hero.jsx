@@ -1,7 +1,29 @@
 import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import { ArrowRight, Shield, HeartPulse, Landmark, Building, Zap } from 'lucide-react';
+import { ThinkingOrb } from 'thinking-orbs';
+import { TypedChars } from './ui/Typewriter';
+import { useTypedCount } from '../hooks/useTypedCount';
 
 const QuantumScene = lazy(() => import('./hero3d/QuantumScene'));
+
+/* Typed intro: the REPL prompt types first, then the two headline lines (one shared counter) */
+const PROMPT = [
+  { text: 'learn_python', className: 'text-gray-900' },
+  { text: '(', className: 'text-gray-500' },
+  { text: 'practically', className: 'text-gray-600' },
+  { text: '=', className: 'text-gray-500' },
+  { text: 'True', className: 'text-brand' },
+  { text: ')', className: 'text-gray-500' },
+];
+const PROMPT_LEN = PROMPT.reduce((n, t) => n + t.text.length, 0);
+const LINE_1 = 'Code confidently.';
+const LINE_2 = 'Ship real projects.';
+const LINE_1_END = PROMPT_LEN + LINE_1.length;
+const TYPE_TOTAL = LINE_1_END + LINE_2.length;
+// ms per character: quick prompt, steadier headline, a beat before each new line
+const typeSpeed = (n) => (n === PROMPT_LEN || n === LINE_1_END ? 260 : n < PROMPT_LEN ? 22 : 38);
+// If WebGL fails or the model never arrives, stop showing the loader after this long
+const SCENE_FALLBACK_MS = 15000;
 
 const audiences = [
   { icon: HeartPulse, label: 'Beginners' },
@@ -75,6 +97,16 @@ export default function Hero() {
   const stageRef = useRef(null);
   const focus = useStageFocus(heroRef, stageRef);
 
+  const typed = useTypedCount(TYPE_TOTAL, { delay: 350, speed: typeSpeed });
+  const caretMode = typed < TYPE_TOTAL ? 'solid' : 'blink';
+  const caretAt = typed < PROMPT_LEN ? 'prompt' : typed < LINE_1_END ? 'line1' : 'line2';
+
+  const [sceneReady, setSceneReady] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setSceneReady(true), SCENE_FALLBACK_MS);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <section
       id="hero"
@@ -84,9 +116,12 @@ export default function Hero() {
       {/* ===================== FULL-SCREEN HERO ===================== */}
       <div ref={heroRef} className="relative isolate flex min-h-[100svh] flex-col">
         {/* 3D scene fills the whole hero; pointer events come from the hero so the shield tilts even over the text */}
-        <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden="true">
+        <div
+          className={`pointer-events-none absolute inset-0 -z-10 transition-opacity duration-700 ${sceneReady ? 'opacity-100' : 'opacity-0'}`}
+          aria-hidden="true"
+        >
           <Suspense fallback={null}>
-            <QuantumScene focus={focus} eventSource={heroRef} />
+            <QuantumScene focus={focus} eventSource={heroRef} onReady={setSceneReady} />
           </Suspense>
         </div>
 
@@ -94,15 +129,23 @@ export default function Hero() {
         <div className="relative z-10 mx-auto w-full max-w-4xl px-6 pt-28 text-center md:pt-32 animate-reveal-up">
           <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-gray-200 bg-surface/70 px-3.5 py-1.5 font-mono text-[13px] font-medium text-gray-700 backdrop-blur-sm">
             <span className="text-brand" aria-hidden="true">&gt;&gt;&gt;</span>
-            learn_python(practically=True)
+            <span>
+              <TypedChars tokens={PROMPT} shown={Math.min(typed, PROMPT_LEN)} caret={caretAt === 'prompt' && caretMode} />
+            </span>
           </p>
           <h1
             className="font-display font-bold text-gray-900"
             style={{ fontSize: 'clamp(2.6rem, 6.2vw, 5.4rem)', lineHeight: 0.98, letterSpacing: '-0.045em' }}
           >
-            Code confidently.
+            <TypedChars
+              tokens={LINE_1}
+              shown={Math.min(Math.max(typed - PROMPT_LEN, 0), LINE_1.length)}
+              caret={caretAt === 'line1' && caretMode}
+            />
             <br />
-            <span className="text-brand">Ship real projects.</span>
+            <span className="text-brand">
+              <TypedChars tokens={LINE_2} shown={Math.max(typed - LINE_1_END, 0)} caret={caretAt === 'line2' && caretMode} />
+            </span>
           </h1>
           <p className="mx-auto mt-6 max-w-[54ch] text-[17px] leading-[1.65] text-gray-600 sm:text-[19px]">
             PyLearnWeb teaches Python through structured lessons and hands-on projects — the skills that
@@ -127,7 +170,19 @@ export default function Hero() {
         </div>
 
         {/* Stage: empty space the shield is centred in (measured by useStageFocus) */}
-        <div ref={stageRef} className="flex-1 min-h-[340px] lg:min-h-[300px]" />
+        <div ref={stageRef} className="relative flex flex-1 min-h-[340px] items-center justify-center lg:min-h-[300px]">
+          {/* Loader while the 3D scene downloads; fades out (and pauses) once the scene has rendered */}
+          <div
+            role="status"
+            aria-hidden={sceneReady}
+            className={`inline-flex h-[60px] items-center gap-3 rounded-full border border-gray-200/80 bg-surface/60 pl-1.5 pr-6 backdrop-blur-md transition-opacity duration-500 ${sceneReady ? 'pointer-events-none opacity-0' : 'opacity-100'}`}
+          >
+            <span className="[&_canvas]:!size-12">
+              <ThinkingOrb state="solving" size={64} paused={sceneReady} />
+            </span>
+            <span className="font-mono text-sm text-gray-500">Solving…</span>
+          </div>
+        </div>
       </div>
 
       {/* Built for real skills + audiences */}

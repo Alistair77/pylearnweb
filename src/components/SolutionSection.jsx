@@ -1,4 +1,5 @@
 import { Network, ShieldCheck } from 'lucide-react';
+import { CodeComment, TypeOnView } from './ui/Typewriter';
 
 const solutionCards = [
   {
@@ -18,7 +19,10 @@ export function SolutionSection() {
     <section id="two-pronged-approach" className="py-28 md:py-40 px-6 bg-surface/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16 animate-reveal-up">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight">How PyLearnWeb Teaches</h2>
+          <CodeComment>how_it_works</CodeComment>
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight">
+            <TypeOnView text="How PyLearnWeb Teaches" />
+          </h2>
           <p className="mt-4 text-lg text-gray-500 max-w-3xl mx-auto">
             We combine structured curriculum with real feedback — the two things most Python resources skip.
           </p>

@@ -541,3 +541,21 @@ body {
 .learning-diagram [fill='#1f2937'] { fill: oklch(0.27 0.007 60); }
 .learning-diagram circle[fill='#374151'] { fill: oklch(0.37 0.008 60); }
 .learning-diagram rect[fill='#6b7280'] { fill: oklch(0.52 0.009 60); }
+
+/* Typewriter caret (ui/Typewriter.jsx): zero-width anchor, bar drawn absolutely so text never shifts */
+.type-caret {
+  position: absolute;
+  left: 100%;
+  top: 0.12em;
+  bottom: 0.08em;
+  width: max(2px, 0.07em);
+  margin-left: 0.06em;
+  border-radius: 1px;
+  background: var(--accent);
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+.type-caret--solid { animation: none; }
+@keyframes caret-blink { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .type-caret { animation: none; }
+}

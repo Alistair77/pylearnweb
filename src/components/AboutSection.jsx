@@ -1,5 +1,6 @@
 import { Award, Globe, Calendar } from 'lucide-react';
 import TiltedCard from '@/components/ui/TiltedCard';
+import { CodeComment, TypeOnView } from './ui/Typewriter';
 
 const awardIcons = [Award, Globe, Calendar];
 
@@ -44,8 +45,9 @@ export function AboutSection() {
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-16 md:mb-20 animate-reveal-up">
           <div className="lg:col-span-7">
+            <CodeComment>about_us</CodeComment>
             <h2 className="text-4xl md:text-6xl font-bold text-gray-900 tracking-tight leading-[1.04] text-balance">
-              Built by developers, for developers
+              <TypeOnView text="Built by developers, for developers" />
             </h2>
           </div>
           <div className="lg:col-span-5 lg:pb-2">

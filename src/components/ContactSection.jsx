@@ -1,11 +1,15 @@
 import { Send } from 'lucide-react';
+import { CodeComment, TypeOnView } from './ui/Typewriter';
 
 export function ContactSection() {
   return (
     <section id="contact" className="py-28 md:py-40 px-6 bg-gray-50/80 backdrop-blur-md">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12 animate-reveal-up">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight">Connect With Us</h2>
+          <CodeComment>get_in_touch</CodeComment>
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight">
+            <TypeOnView text="Connect With Us" />
+          </h2>
           <p className="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
             Have questions or want to discuss a partnership? We&apos;re ready to help you start your Python journey.
           </p>

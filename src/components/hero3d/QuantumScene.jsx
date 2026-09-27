@@ -319,8 +319,12 @@ function useFit(focus) {
   return { s, y, sx };
 }
 
-function SceneContents({ focus }) {
+function SceneContents({ focus, onReady }) {
   const isDark = useIsDark();
+  // Runs once everything inside the Suspense boundary (model, environment) has resolved
+  useEffect(() => {
+    onReady?.(true);
+  }, [onReady]);
   const { s, y, sx } = useFit(focus);
   return (
     <>
@@ -359,7 +363,7 @@ function SceneContents({ focus }) {
   );
 }
 
-export default function QuantumScene({ focus, eventSource }) {
+export default function QuantumScene({ focus, eventSource, onReady }) {
   return (
     <Canvas
       dpr={[1, 1.5]}
@@ -374,7 +378,7 @@ export default function QuantumScene({ focus, eventSource }) {
       style={{ width: '100%', height: '100%' }}
     >
       <Suspense fallback={null}>
-        <SceneContents focus={focus} />
+        <SceneContents focus={focus} onReady={onReady} />
       </Suspense>
     </Canvas>
   );

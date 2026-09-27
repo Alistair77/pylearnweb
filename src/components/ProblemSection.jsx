@@ -1,4 +1,5 @@
 import { TriangleAlert, ServerCrash, Clock, ArrowRight } from 'lucide-react';
+import { CodeComment, TypeOnView } from './ui/Typewriter';
 
 const problems = [
   {
@@ -22,11 +23,12 @@ export function ProblemSection() {
   return (
     <section id="technologies" className="py-28 md:py-40 px-6 bg-gray-50/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto">
-        {/* Editorial header — headline carries the section, no eyebrow scaffolding */}
+        {/* Editorial header — code-comment label, typed headline */}
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-14 md:mb-18 animate-reveal-up">
           <div className="lg:col-span-7">
+            <CodeComment>why_people_quit</CodeComment>
             <h2 className="text-4xl md:text-6xl font-bold text-gray-900 tracking-tight leading-[1.04] text-balance">
-              Why most people give up learning Python
+              <TypeOnView text="Why most people give up learning Python" />
             </h2>
           </div>
           <div className="lg:col-span-5 lg:pb-2">

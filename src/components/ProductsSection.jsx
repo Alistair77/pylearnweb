@@ -1,4 +1,5 @@
 import { Shield, Landmark, Zap, Factory, HeartPulse, Building, ArrowRight, Atom } from 'lucide-react';
+import { CodeComment, TypeOnView } from './ui/Typewriter';
 
 const products = [
   {
@@ -73,8 +74,9 @@ export function ProductsSection() {
         {/* Asymmetric editorial header */}
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-12 md:mb-14 animate-reveal-up">
           <div className="lg:col-span-7">
+            <CodeComment>learning_tracks</CodeComment>
             <h2 className="text-4xl md:text-6xl font-bold text-gray-900 tracking-tight leading-[1.04] text-balance">
-              PyLearnWeb Tracks
+              <TypeOnView text="PyLearnWeb Tracks" />
             </h2>
           </div>
           <div className="lg:col-span-5 lg:pb-2">
