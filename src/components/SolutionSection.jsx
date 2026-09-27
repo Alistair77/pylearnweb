@@ -16,7 +16,7 @@ const solutionCards = [
 
 export function SolutionSection() {
   return (
-    <section id="two-pronged-approach" className="py-28 md:py-40 px-6 bg-surface/80 backdrop-blur-md">
+    <section id="two-pronged-approach" className="py-28 md:py-40 px-6 bg-surface/90">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16 animate-reveal-up">
           <CodeComment>how_it_works</CodeComment>

@@ -41,7 +41,7 @@ const awards = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="py-28 md:py-40 px-6 bg-surface/80 backdrop-blur-md">
+    <section id="about" className="py-28 md:py-40 px-6 bg-surface/90">
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-16 md:mb-20 animate-reveal-up">
           <div className="lg:col-span-7">

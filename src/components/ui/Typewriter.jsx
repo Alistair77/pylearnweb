@@ -44,8 +44,8 @@ export function TypedChars({ tokens, shown, caret = false }) {
   );
 }
 
-/* Types its text the first time it scrolls into view (section headings) */
-export function TypeOnView({ text, speed = 28 }) {
+/* Types its text the first time it scrolls into view. keepCaret: leave a blinking caret at the end */
+export function TypeOnView({ text, speed = 28, keepCaret = false }) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
   useEffect(() => {
@@ -66,7 +66,7 @@ export function TypeOnView({ text, speed = 28 }) {
   const shown = useTypedCount(text.length, { start: inView, speed });
   return (
     <span ref={ref}>
-      <TypedChars tokens={text} shown={shown} caret={shown < text.length && 'solid'} />
+      <TypedChars tokens={text} shown={shown} caret={shown < text.length ? 'solid' : keepCaret && 'blink'} />
     </span>
   );
 }

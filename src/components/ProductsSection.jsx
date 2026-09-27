@@ -69,7 +69,7 @@ export function ProductsSection() {
   const supporting = products.slice(1);
 
   return (
-    <section id="products" className="py-28 md:py-40 px-6 bg-gray-50/80 backdrop-blur-md">
+    <section id="products" className="py-28 md:py-40 px-6 bg-gray-50/90">
       <div className="max-w-7xl mx-auto">
         {/* Asymmetric editorial header */}
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-12 md:mb-14 animate-reveal-up">

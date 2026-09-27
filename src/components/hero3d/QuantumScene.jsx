@@ -363,10 +363,12 @@ function SceneContents({ focus, onReady }) {
   );
 }
 
-export default function QuantumScene({ focus, eventSource, onReady }) {
+export default function QuantumScene({ focus, eventSource, onReady, active = true }) {
   return (
     <Canvas
-      dpr={[1, 1.5]}
+      // 1.25 cap: full-screen canvas with bloom + glass transmission; higher DPR costs frames, not visible detail
+      dpr={[1, 1.25]}
+      frameloop={active ? 'always' : 'never'}
       eventSource={eventSource}
       eventPrefix="client"
       gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}

@@ -21,7 +21,7 @@ const problems = [
 
 export function ProblemSection() {
   return (
-    <section id="technologies" className="py-28 md:py-40 px-6 bg-gray-50/80 backdrop-blur-md">
+    <section id="technologies" className="py-28 md:py-40 px-6 bg-gray-50/90">
       <div className="max-w-7xl mx-auto">
         {/* Editorial header — code-comment label, typed headline */}
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-end mb-14 md:mb-18 animate-reveal-up">

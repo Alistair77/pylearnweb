@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, memo, useEffect, useRef, useState } from 'react';
 import { ArrowRight, Shield, HeartPulse, Landmark, Building, Zap } from 'lucide-react';
 import { ThinkingOrb } from 'thinking-orbs';
 import { TypedChars } from './ui/Typewriter';
@@ -6,7 +6,7 @@ import { useTypedCount } from '../hooks/useTypedCount';
 
 const QuantumScene = lazy(() => import('./hero3d/QuantumScene'));
 
-/* Typed intro: the REPL prompt types first, then the two headline lines (one shared counter) */
+/* REPL prompt shown instantly above the headline; only the headline types */
 const PROMPT = [
   { text: 'learn_python', className: 'text-gray-900' },
   { text: '(', className: 'text-gray-500' },
@@ -15,13 +15,11 @@ const PROMPT = [
   { text: 'True', className: 'text-brand' },
   { text: ')', className: 'text-gray-500' },
 ];
-const PROMPT_LEN = PROMPT.reduce((n, t) => n + t.text.length, 0);
 const LINE_1 = 'Code confidently.';
 const LINE_2 = 'Ship real projects.';
-const LINE_1_END = PROMPT_LEN + LINE_1.length;
-const TYPE_TOTAL = LINE_1_END + LINE_2.length;
-// ms per character: quick prompt, steadier headline, a beat before each new line
-const typeSpeed = (n) => (n === PROMPT_LEN || n === LINE_1_END ? 260 : n < PROMPT_LEN ? 22 : 38);
+const TYPE_TOTAL = LINE_1.length + LINE_2.length;
+// ms per character, with a short beat before the second line (~1s for the whole headline)
+const typeSpeed = (n) => (n === LINE_1.length ? 140 : 24);
 // If WebGL fails or the model never arrives, stop showing the loader after this long
 const SCENE_FALLBACK_MS = 15000;
 
@@ -50,23 +48,60 @@ const products = [
 
 const stats = ['50K+ Learners', '120+ Countries', '4.8/5 Rating', '2M+ Exercises Solved', 'Est. 2021'];
 
-/* Animated count-up for the "lines of code" figure (demo data) */
-function useCountUp(target, duration = 1800) {
+/* Animated count-up for the "lines of code" figure (demo data). Its own component so the
+   per-frame updates re-render just this number, not the whole hero and 3D scene. */
+function LinesCounter({ target, duration = 1800 }) {
   const [val, setVal] = useState(0);
-  const ref = useRef(null);
   useEffect(() => {
     let raf;
     const start = performance.now();
     const tick = (now) => {
       const p = Math.min(1, (now - start) / duration);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setVal(Math.floor(target * eased));
+      setVal(Math.floor(target * (1 - Math.pow(1 - p, 3))));
       if (p < 1) raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
   }, [target, duration]);
-  return [val, ref];
+  return val.toLocaleString('en-US');
+}
+
+/* Typed headline in its own component: typing re-renders only these spans */
+function TypedHeadline() {
+  const typed = useTypedCount(TYPE_TOTAL, { delay: 150, speed: typeSpeed });
+  const caret = typed < TYPE_TOTAL ? 'solid' : 'blink';
+  return (
+    <h1
+      className="font-display font-bold text-gray-900"
+      style={{ fontSize: 'clamp(2.6rem, 6.2vw, 5.4rem)', lineHeight: 0.98, letterSpacing: '-0.045em' }}
+    >
+      <TypedChars tokens={LINE_1} shown={Math.min(typed, LINE_1.length)} caret={typed < LINE_1.length && caret} />
+      <br />
+      <span className="text-brand">
+        <TypedChars
+          tokens={LINE_2}
+          shown={Math.max(typed - LINE_1.length, 0)}
+          caret={typed >= LINE_1.length && caret}
+        />
+      </span>
+    </h1>
+  );
+}
+
+/* Only re-render the 3D scene when its own props change */
+const Scene = memo(QuantumScene);
+
+/* Pause the WebGL render loop while the hero is scrolled out of view */
+function useInView(ref) {
+  const [inView, setInView] = useState(true);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    const io = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting));
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ref]);
+  return inView;
 }
 
 function handleScroll(id) {
@@ -92,14 +127,11 @@ function useStageFocus(heroRef, stageRef) {
 }
 
 export default function Hero() {
-  const [linesWritten] = useCountUp(9384217);
   const heroRef = useRef(null);
   const stageRef = useRef(null);
   const focus = useStageFocus(heroRef, stageRef);
 
-  const typed = useTypedCount(TYPE_TOTAL, { delay: 350, speed: typeSpeed });
-  const caretMode = typed < TYPE_TOTAL ? 'solid' : 'blink';
-  const caretAt = typed < PROMPT_LEN ? 'prompt' : typed < LINE_1_END ? 'line1' : 'line2';
+  const heroInView = useInView(heroRef);
 
   const [sceneReady, setSceneReady] = useState(false);
   useEffect(() => {
@@ -121,7 +153,7 @@ export default function Hero() {
           aria-hidden="true"
         >
           <Suspense fallback={null}>
-            <QuantumScene focus={focus} eventSource={heroRef} onReady={setSceneReady} />
+            <Scene focus={focus} eventSource={heroRef} onReady={setSceneReady} active={heroInView} />
           </Suspense>
         </div>
 
@@ -130,23 +162,14 @@ export default function Hero() {
           <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-gray-200 bg-surface/70 px-3.5 py-1.5 font-mono text-[13px] font-medium text-gray-700 backdrop-blur-sm">
             <span className="text-brand" aria-hidden="true">&gt;&gt;&gt;</span>
             <span>
-              <TypedChars tokens={PROMPT} shown={Math.min(typed, PROMPT_LEN)} caret={caretAt === 'prompt' && caretMode} />
+              {PROMPT.map((t) => (
+                <span key={t.text} className={t.className}>
+                  {t.text}
+                </span>
+              ))}
             </span>
           </p>
-          <h1
-            className="font-display font-bold text-gray-900"
-            style={{ fontSize: 'clamp(2.6rem, 6.2vw, 5.4rem)', lineHeight: 0.98, letterSpacing: '-0.045em' }}
-          >
-            <TypedChars
-              tokens={LINE_1}
-              shown={Math.min(Math.max(typed - PROMPT_LEN, 0), LINE_1.length)}
-              caret={caretAt === 'line1' && caretMode}
-            />
-            <br />
-            <span className="text-brand">
-              <TypedChars tokens={LINE_2} shown={Math.max(typed - LINE_1_END, 0)} caret={caretAt === 'line2' && caretMode} />
-            </span>
-          </h1>
+          <TypedHeadline />
           <p className="mx-auto mt-6 max-w-[54ch] text-[17px] leading-[1.65] text-gray-600 sm:text-[19px]">
             PyLearnWeb teaches Python through structured lessons and hands-on projects — the skills that
             actually stick, not tutorials you forget by tomorrow.
@@ -200,7 +223,7 @@ export default function Hero() {
 
       {/* ===================== PRODUCT STRIP ===================== */}
       <div className="relative mx-auto max-w-[1400px] px-6 pb-16">
-        <div className="grid grid-cols-1 gap-y-8 rounded-3xl border border-gray-200/80 bg-surface/80 p-6 sm:p-8 backdrop-blur-sm shadow-[0_24px_60px_-30px_rgba(0,0,0,0.15)] md:grid-cols-2 md:gap-x-10 lg:grid-cols-4 lg:divide-x lg:divide-gray-200">
+        <div className="grid grid-cols-1 gap-y-8 rounded-3xl border border-gray-200/80 bg-surface/90 p-6 sm:p-8 shadow-[0_24px_60px_-30px_rgba(0,0,0,0.15)] md:grid-cols-2 md:gap-x-10 lg:grid-cols-4 lg:divide-x lg:divide-gray-200">
           {products.map((p, i) => (
             <div key={p.title} className={i > 0 ? 'lg:pl-10' : ''}>
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand">
@@ -208,8 +231,8 @@ export default function Hero() {
               </span>
               <h3 className="mt-5 text-xl font-semibold tracking-tight text-gray-900">{p.title}</h3>
               <p className="mt-2 text-[15px] leading-relaxed text-gray-600">{p.desc}</p>
-              <button className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:gap-2.5 transition-all">
-                Learn More <ArrowRight className="w-4 h-4" strokeWidth={2} />
+              <button className="group mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
+                Learn More <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
               </button>
             </div>
           ))}
@@ -218,7 +241,7 @@ export default function Hero() {
           <div className="lg:pl-10">
             <h3 className="font-mono text-xs font-medium uppercase tracking-[0.14em] text-gray-500">Lines of code written today</h3>
             <p className="mt-3 font-mono text-3xl font-bold tabular-nums text-brand">
-              {linesWritten.toLocaleString('en-US')}
+              <LinesCounter target={9384217} />
             </p>
             <svg viewBox="0 0 220 70" className="mt-3 w-full" preserveAspectRatio="none" aria-hidden="true">
               <polyline
@@ -233,8 +256,8 @@ export default function Hero() {
                 <circle key={i} cx={x} cy={y} r="2.6" fill="#dc2626" />
               ))}
             </svg>
-            <button className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:gap-2.5 transition-all">
-              See student projects <ArrowRight className="w-4 h-4" strokeWidth={2} />
+            <button className="group mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
+              See student projects <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
             </button>
           </div>
         </div>

@@ -3,7 +3,7 @@ import { CodeComment, TypeOnView } from './ui/Typewriter';
 
 export function ContactSection() {
   return (
-    <section id="contact" className="py-28 md:py-40 px-6 bg-gray-50/80 backdrop-blur-md">
+    <section id="contact" className="py-28 md:py-40 px-6 bg-gray-50/90">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12 animate-reveal-up">
           <CodeComment>get_in_touch</CodeComment>
