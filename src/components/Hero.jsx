@@ -92,33 +92,33 @@ export default function Hero() {
 
         {/* Centered copy — sits above the stage, never on top of the shield */}
         <div className="relative z-10 mx-auto w-full max-w-4xl px-6 pt-28 text-center md:pt-32 animate-reveal-up">
-          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-brand sm:text-sm">
-            Learn Python, Practically
-          </span>
-          <span className="mx-auto mt-5 mb-6 block h-[3px] w-12 bg-brand" />
+          <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-gray-200 bg-surface/70 px-3.5 py-1.5 font-mono text-[13px] font-medium text-gray-700 backdrop-blur-sm">
+            <span className="text-brand" aria-hidden="true">&gt;&gt;&gt;</span>
+            learn_python(practically=True)
+          </p>
           <h1
-            className="font-extrabold tracking-tight text-gray-900"
-            style={{ fontSize: 'clamp(2.4rem, 5.2vw, 4.5rem)', lineHeight: 1.02, letterSpacing: '-0.02em' }}
+            className="font-display font-bold text-gray-900"
+            style={{ fontSize: 'clamp(2.6rem, 6.2vw, 5.4rem)', lineHeight: 0.98, letterSpacing: '-0.045em' }}
           >
             Code confidently.
             <br />
             <span className="text-brand">Ship real projects.</span>
           </h1>
-          <p className="mx-auto mt-6 max-w-[58ch] text-base leading-relaxed text-gray-600 sm:text-lg">
+          <p className="mx-auto mt-6 max-w-[54ch] text-[17px] leading-[1.65] text-gray-600 sm:text-[19px]">
             PyLearnWeb teaches Python through structured lessons and hands-on projects — the skills that
             actually stick, not tutorials you forget by tomorrow.
           </p>
           <div className="mx-auto mt-8 flex max-w-xs flex-col justify-center gap-3 sm:max-w-none sm:flex-row sm:gap-4">
             <button
               onClick={() => handleScroll('products')}
-              className="group inline-flex items-center justify-center gap-2 rounded-lg bg-brand px-4 py-3.5 text-xs font-semibold uppercase tracking-wide text-white shadow-lg shadow-brand/20 transition-colors hover:bg-brand-hover active:translate-y-px sm:px-7 sm:py-4 sm:text-sm"
+              className="group inline-flex items-center justify-center gap-2 rounded-lg bg-brand px-5 py-3.5 text-[15px] font-semibold text-white shadow-lg shadow-brand/20 transition-colors hover:bg-brand-hover active:translate-y-px sm:px-7 sm:py-4"
             >
               Explore Courses
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
             </button>
             <button
               onClick={() => handleScroll('two-pronged-approach')}
-              className="group inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-surface/70 px-4 py-3.5 text-xs font-semibold uppercase tracking-wide text-gray-800 backdrop-blur-sm transition-colors hover:border-gray-400 hover:bg-surface active:translate-y-px sm:px-7 sm:py-4 sm:text-sm"
+              className="group inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-surface/70 px-5 py-3.5 text-[15px] font-semibold text-gray-800 backdrop-blur-sm transition-colors hover:border-gray-400 hover:bg-surface active:translate-y-px sm:px-7 sm:py-4"
             >
               How It Works
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
@@ -132,7 +132,7 @@ export default function Hero() {
 
       {/* Built for real skills + audiences */}
       <div className="relative mx-auto max-w-[1400px] px-6 pt-10 pb-16 text-center animate-reveal-up delay-200">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">Built for Real Skills</p>
+        <p className="font-mono text-xs font-medium uppercase tracking-[0.18em] text-gray-500">Built for real skills</p>
         <div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 sm:gap-x-10">
           {audiences.map((a) => (
             <div key={a.label} className="flex items-center gap-2.5 text-sm font-medium text-gray-700">
@@ -151,8 +151,8 @@ export default function Hero() {
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand">
                 <Shield className="w-5 h-5" strokeWidth={1.75} />
               </span>
-              <h3 className="mt-5 text-base font-bold uppercase tracking-wide text-gray-900">{p.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-gray-600">{p.desc}</p>
+              <h3 className="mt-5 text-xl font-semibold tracking-tight text-gray-900">{p.title}</h3>
+              <p className="mt-2 text-[15px] leading-relaxed text-gray-600">{p.desc}</p>
               <button className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand hover:gap-2.5 transition-all">
                 Learn More <ArrowRight className="w-4 h-4" strokeWidth={2} />
               </button>
@@ -161,7 +161,7 @@ export default function Hero() {
 
           {/* Lines of code counter */}
           <div className="lg:pl-10">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-gray-500">Lines of Code Written Today</h3>
+            <h3 className="font-mono text-xs font-medium uppercase tracking-[0.14em] text-gray-500">Lines of code written today</h3>
             <p className="mt-3 font-mono text-3xl font-bold tabular-nums text-brand">
               {linesWritten.toLocaleString('en-US')}
             </p>
@@ -188,12 +188,12 @@ export default function Hero() {
       {/* ===================== TRUSTED-BY STATS ===================== */}
       <div className="relative mx-auto max-w-[1400px] px-6 pb-16">
         <div className="flex flex-col items-start gap-8 border-t border-gray-200 pt-10 lg:flex-row lg:items-center lg:justify-between">
-          <p className="max-w-[14rem] text-xs font-semibold uppercase leading-relaxed tracking-[0.14em] text-gray-500">
+          <p className="max-w-[14rem] font-mono text-xs font-medium uppercase leading-relaxed tracking-[0.14em] text-gray-500">
             Trusted by a growing global community
           </p>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-4 sm:gap-x-10">
             {stats.map((stat) => (
-              <span key={stat} className="text-base font-semibold tracking-tight text-gray-400 transition-colors hover:text-gray-600">
+              <span key={stat} className="font-display text-lg font-semibold tracking-tight text-gray-400 transition-colors hover:text-gray-600">
                 {stat}
               </span>
             ))}

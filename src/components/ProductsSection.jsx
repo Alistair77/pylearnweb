@@ -112,7 +112,7 @@ export function ProductsSection() {
                 <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 ring-1 ring-white/10 text-accent-on-dark shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
                   <ShieldGlyph id={featured.id} className="w-7 h-7" />
                 </span>
-                <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-on-dark">
+                <span className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-accent-on-dark">
                   {featured.tier}
                 </span>
               </div>
@@ -123,7 +123,7 @@ export function ProductsSection() {
               </div>
             </div>
             <div className="md:border-l md:border-white/10 md:pl-14">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 mb-5">Ideal For</p>
+              <p className="font-mono text-xs font-medium uppercase tracking-[0.18em] text-zinc-500 mb-5">Ideal For</p>
               <div className="grid grid-cols-2 gap-3">
                 {featured.industries.map((ind) => (
                   <div
@@ -158,7 +158,7 @@ export function ProductsSection() {
                 </span>
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 tracking-tight">{product.title}</h3>
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-brand mt-0.5">{product.tier}</p>
+                  <p className="font-mono text-xs font-medium uppercase tracking-[0.16em] text-brand mt-0.5">{product.tier}</p>
                 </div>
               </div>
               <p className="text-gray-600 leading-relaxed mb-6 flex-grow">{product.description}</p>
