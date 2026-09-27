@@ -1,18 +1,50 @@
-import { useState, useRef, useEffect } from 'react';
+import { Fragment, useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, Minimize2, Send, Bot, User } from 'lucide-react';
 import logoImg from '../assets/images/logo.svg';
 import { Button } from './ui/button';
+import knowledge from './chat/knowledge.md?raw';
+import { createAnswerer } from './chat/answer';
 
-/* Canned replies use **bold** markers; render them as <strong>, everything else as plain text */
-function formatReply(text) {
-  return text.split('**').map((part, i) =>
+const { answer } = createAnswerer(knowledge);
+// Short pause so replies feel considered rather than instant
+const REPLY_DELAY_MS = 450;
+
+/* Replies use a markdown subset: ```fenced code```, `inline code` and **bold**.
+   Rendered as React text nodes (no HTML injection). */
+function formatInline(text) {
+  return text.split('`').map((part, i) =>
     i % 2 ? (
-      <strong key={i} className="font-semibold text-zinc-50">
+      <code key={i} className="rounded bg-black/30 px-1 py-0.5 font-mono text-[12.5px] text-accent-on-dark">
         {part}
-      </strong>
+      </code>
     ) : (
-      part
+      <Fragment key={i}>
+        {part.split('**').map((p, j) =>
+          j % 2 ? (
+            <strong key={j} className="font-semibold text-zinc-50">
+              {p}
+            </strong>
+          ) : (
+            p
+          ),
+        )}
+      </Fragment>
+    ),
+  );
+}
+
+function formatReply(text) {
+  return text.split('```').map((chunk, i) =>
+    i % 2 ? (
+      <pre
+        key={i}
+        className="my-2 overflow-x-auto whitespace-pre rounded-lg border border-white/10 bg-black/40 p-3 font-mono text-[12.5px] leading-relaxed text-zinc-100"
+      >
+        <code>{chunk.replace(/^[a-z]*\n/, '').replace(/\n$/, '')}</code>
+      </pre>
+    ) : (
+      <Fragment key={i}>{formatInline(chunk.replace(/^\n|\n$/g, ''))}</Fragment>
     ),
   );
 }
@@ -23,7 +55,7 @@ export default function ChatWidget() {
     {
       id: '1',
       role: 'assistant',
-      content: "Hello! I'm the PyLearnWeb assistant. I can help you learn about our courses, learning tracks, and how the platform works. How can I assist you today?",
+      content: "Hi! I'm the PyLearnWeb assistant. Ask me any Python question — `how do lists work?`, `what is a decorator?`, `how do I fix IndentationError?` — or about our courses.",
       timestamp: new Date()
     }
   ]);
@@ -52,28 +84,8 @@ export default function ChatWidget() {
     setInput('');
     setLoading(true);
 
-    // Simulate AI response delay
     setTimeout(() => {
-      let responseContent = '';
-      const query = userMessage.content.toLowerCase();
-
-      if (query.includes('founder') || query.includes('team') || query.includes('leader') || query.includes('who')) {
-        responseContent = `PyLearnWeb is built by a small independent team:
-- Co-Founder & CEO
-- Co-Founder & CTO
-- Co-Founder & Head of Curriculum`;
-      } else if (query.includes('course') || query.includes('track') || query.includes('beginner') || query.includes('practitioner') || query.includes('professional')) {
-        responseContent = `We offer three learning tracks:
-1. **Beginner Track**: Start from zero — syntax, logic, and your first working programs.
-2. **Practitioner Track**: Real projects, testing, and clean-code practices for job-ready skills.
-3. **Professional Track**: Advanced topics like APIs, data pipelines, and deployment, with mentor code review.`;
-      } else if (query.includes('contact') || query.includes('email') || query.includes('support')) {
-        responseContent = `You can reach us via the contact form on the home page, or submit a question here anytime!`;
-      } else if (query.includes('how') || query.includes('work') || query.includes('curriculum')) {
-        responseContent = `PyLearnWeb pairs a structured, project-based curriculum with automated code review and mentor feedback — so every lesson ends with something real you built, checked, and understand.`;
-      } else {
-        responseContent = `Thanks for your question! PyLearnWeb helps people learn Python through structured lessons and hands-on projects, with real feedback on real code. Ask me about our courses, tracks, or how the platform works.`;
-      }
+      const responseContent = answer(userMessage.content);
 
       setMessages((prev) => [
         ...prev,
@@ -85,7 +97,7 @@ export default function ChatWidget() {
         }
       ]);
       setLoading(false);
-    }, 1200);
+    }, REPLY_DELAY_MS);
   };
 
   return (
@@ -148,10 +160,10 @@ export default function ChatWidget() {
                     </div>
                   )}
                   <div
-                    className={`max-w-[75%] whitespace-pre-line rounded-2xl p-3 text-sm leading-relaxed ${
+                    className={`min-w-0 whitespace-pre-line rounded-2xl p-3 text-sm leading-relaxed ${
                       msg.role === 'user'
-                        ? 'bg-brand text-white rounded-tr-none'
-                        : 'bg-neutral-800 text-zinc-200 rounded-tl-none border border-neutral-700'
+                        ? 'max-w-[75%] bg-brand text-white rounded-tr-none'
+                        : 'max-w-[85%] bg-neutral-800 text-zinc-200 rounded-tl-none border border-neutral-700'
                     }`}
                   >
                     {msg.role === 'user' ? msg.content : formatReply(msg.content)}
