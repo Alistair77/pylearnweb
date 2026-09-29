@@ -1,63 +1,50 @@
-import { Shield, Landmark, Zap, Factory, HeartPulse, Building, ArrowRight, Atom } from 'lucide-react';
+import { ArrowRight, RefreshCw, Users } from 'lucide-react';
 import { CodeComment, TypeOnView } from './ui/Typewriter';
 
+// Ordered as a path: beginners start at step 01, which is featured
 const products = [
   {
-    id: 'trustless',
-    title: 'Professional Track',
-    tier: 'Professional Tier',
-    description: 'Our most advanced track — build production systems, APIs, and data pipelines with full mentor code review.',
-    stack: 'APIs · Testing · Deployment',
-    industries: [
-      { icon: Landmark, label: 'Backend Devs' },
-      { icon: Zap, label: 'Fast-Track Learners' },
-      { icon: Shield, label: 'Job Seekers' },
-      { icon: Factory, label: 'Freelancers' },
-    ],
-    href: '#contact',
-  },
-  {
-    id: 'embedded',
-    title: 'Practitioner Track',
-    tier: 'Practitioner Tier',
-    description: 'Real projects, testing, and clean-code practices that turn syntax knowledge into job-ready skills.',
-    stack: 'Projects · Testing · Git',
-    industries: [
-      { icon: HeartPulse, label: 'Career Switchers' },
-      { icon: Factory, label: 'Bootcamp Grads' },
-      { icon: Building, label: 'Self-Taught Devs' },
-      { icon: Shield, label: 'Students' },
-    ],
-    href: '#contact',
-  },
-  {
-    id: 'lite',
+    id: 'beginner',
     title: 'Beginner Track',
-    tier: 'Beginner Tier',
-    description: 'Start from zero — syntax, logic, and your first working programs, one guided lesson at a time.',
+    tier: 'step 01 · start here',
+    description: 'Start from zero: syntax, logic and your first working programs, one guided lesson at a time. No experience needed.',
     stack: 'Syntax · Logic · Practice',
-    industries: [
-      { icon: Building, label: 'Complete Beginners' },
-      { icon: Zap, label: 'Quick Starters' },
-      { icon: Building, label: 'Hobbyists' },
-      { icon: Factory, label: 'Curious Minds' },
-    ],
+    audience: ['Complete beginners', 'Hobbyists', 'Students', 'Curious minds'],
+    href: '#contact',
+  },
+  {
+    id: 'practitioner',
+    title: 'Practitioner Track',
+    tier: 'step 02',
+    description: 'Real projects, testing and clean-code practices that turn syntax knowledge into job-ready skills.',
+    stack: 'Projects · Testing · Git',
+    audience: ['Career switchers', 'Bootcamp grads', 'Self-taught devs'],
+    href: '#contact',
+  },
+  {
+    id: 'professional',
+    title: 'Professional Track',
+    tier: 'step 03',
+    description: 'Our most advanced track: production systems, APIs and data pipelines, with full mentor code review.',
+    stack: 'APIs · Testing · Deployment',
+    audience: ['Backend devs', 'Job seekers', 'Freelancers'],
     href: '#contact',
   },
 ];
 
+// Level marks inside the glyph: one line per step
 const shieldLines = {
-  trustless: [11, 13, 15],
-  embedded: [12, 14],
-  lite: [13],
+  beginner: [13],
+  practitioner: [12, 14],
+  professional: [11, 13, 15],
 };
 
 function ShieldGlyph({ id, className }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
+    <svg aria-hidden="true" className={className} viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" fill="none" strokeLinecap="round" strokeLinejoin="round">
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 21.5l-8 -4.5v-9l8 -4.5l8 4.5v9l-8 4.5" />
-      {(shieldLines[id] || shieldLines.lite).map((y) => (
+      {(shieldLines[id] || shieldLines.beginner).map((y) => (
         <line key={y} x1="8" y1={y} x2="16" y2={y} stroke="currentColor" strokeWidth="1.5" />
       ))}
     </svg>
@@ -76,7 +63,7 @@ export function ProductsSection() {
           <div className="lg:col-span-7">
             <CodeComment>learning_tracks</CodeComment>
             <h2 className="text-4xl md:text-6xl font-bold text-gray-900 tracking-tight leading-[1.04] text-balance">
-              <TypeOnView text="PyLearnWeb Tracks" />
+              <TypeOnView text="Three tracks, one path" />
             </h2>
           </div>
           <div className="lg:col-span-5 lg:pb-2">
@@ -89,17 +76,17 @@ export function ProductsSection() {
         {/* Industry-aligned curriculum — bordered, icon-led callout */}
         <div className="flex items-start gap-4 rounded-2xl border border-gray-200 bg-surface/70 px-6 py-5 mb-14 max-w-4xl animate-reveal-up delay-200">
           <span className="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-brand-50 text-brand">
-            <Shield className="w-5 h-5" strokeWidth={1.5} />
+            <RefreshCw className="w-5 h-5" strokeWidth={1.5} />
           </span>
           <div>
-            <h3 className="font-semibold text-gray-900 mb-1">Industry-Aligned Curriculum</h3>
+            <h3 className="font-semibold text-gray-900 mb-1">Industry-aligned curriculum</h3>
             <p className="text-gray-600 text-sm leading-relaxed text-pretty">
               Our curriculum is updated regularly to match the tools and practices real Python teams use today, so what you learn stays relevant as the ecosystem evolves.
             </p>
           </div>
         </div>
 
-        {/* Flagship tier — wide, dark, sets hierarchy */}
+        {/* Step 01: wide, dark, the obvious place to start */}
         <a
           href={featured.href}
           className="group relative block overflow-hidden rounded-2xl bg-zinc-950 text-white p-8 md:p-12 mb-6 shadow-[0_30px_60px_-30px_rgba(0,0,0,0.55)] transition-all duration-500 hover:-translate-y-1 active:translate-y-0 animate-reveal-up delay-300"
@@ -114,8 +101,8 @@ export function ProductsSection() {
                 <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 ring-1 ring-white/10 text-accent-on-dark shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
                   <ShieldGlyph id={featured.id} className="w-7 h-7" />
                 </span>
-                <span className="font-mono text-xs font-medium uppercase tracking-[0.2em] text-accent-on-dark">
-                  {featured.tier}
+                <span className="font-mono text-sm font-medium text-accent-on-dark">
+                  <span className="text-zinc-400">#</span> {featured.tier}
                 </span>
               </div>
               <h3 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">{featured.title}</h3>
@@ -125,22 +112,23 @@ export function ProductsSection() {
               </div>
             </div>
             <div className="md:border-l md:border-white/10 md:pl-14">
-              <p className="font-mono text-xs font-medium uppercase tracking-[0.18em] text-zinc-500 mb-5">Ideal For</p>
+              <p className="font-mono text-sm font-medium text-zinc-400 mb-5">
+                <span className="text-accent-on-dark">#</span> ideal_for
+              </p>
               <div className="grid grid-cols-2 gap-3">
-                {featured.industries.map((ind) => (
+                {featured.audience.map((label) => (
                   <div
-                    key={ind.label}
-                    className="flex items-center gap-3 rounded-xl bg-white/5 ring-1 ring-white/10 px-4 py-3 text-sm text-zinc-200"
+                    key={label}
+                    className="rounded-xl bg-white/5 ring-1 ring-white/10 px-4 py-3 text-sm text-zinc-200"
                   >
-                    <ind.icon className="w-4 h-4 text-accent-on-dark flex-none" strokeWidth={1.5} />
-                    {ind.label}
+                    {label}
                   </div>
                 ))}
               </div>
             </div>
           </div>
           <span className="relative mt-10 inline-flex items-center gap-2 text-sm font-semibold text-white">
-            Explore {featured.title}
+            Start the {featured.title}
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
           </span>
         </a>
@@ -160,7 +148,9 @@ export function ProductsSection() {
                 </span>
                 <div>
                   <h3 className="text-xl font-bold text-gray-900 tracking-tight">{product.title}</h3>
-                  <p className="font-mono text-xs font-medium uppercase tracking-[0.16em] text-brand mt-0.5">{product.tier}</p>
+                  <p className="font-mono text-sm font-medium text-brand mt-0.5">
+                    <span className="text-gray-500">#</span> {product.tier}
+                  </p>
                 </div>
               </div>
               <p className="text-gray-600 leading-relaxed mb-6 flex-grow">{product.description}</p>
@@ -168,11 +158,10 @@ export function ProductsSection() {
                 {product.stack}
               </div>
               <div className="flex flex-wrap gap-2">
-                {product.industries.map((ind) => (
-                  <div key={ind.label} className="inline-flex items-center gap-1.5 text-xs text-gray-700 bg-gray-100 px-2.5 py-1 rounded-full">
-                    <ind.icon className="w-3 h-3 text-gray-500" strokeWidth={1.5} />
-                    {ind.label}
-                  </div>
+                {product.audience.map((label) => (
+                  <span key={label} className="text-xs text-gray-700 bg-gray-100 px-2.5 py-1 rounded-full">
+                    {label}
+                  </span>
                 ))}
               </div>
             </a>
@@ -195,7 +184,7 @@ export function ProductsSection() {
             className="inline-flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors active:translate-y-px"
           >
             Meet the team
-            <Atom className="w-5 h-5" strokeWidth={1.5} />
+            <Users className="w-5 h-5" strokeWidth={1.5} />
           </button>
         </div>
       </div>

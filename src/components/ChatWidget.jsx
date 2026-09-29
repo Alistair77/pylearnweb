@@ -55,7 +55,7 @@ export default function ChatWidget() {
     {
       id: '1',
       role: 'assistant',
-      content: "Hi! I'm the PyLearnWeb assistant. Ask me any Python question — `how do lists work?`, `what is a decorator?`, `how do I fix IndentationError?` — or about our courses.",
+      content: "Hi! I'm the PyLearnWeb assistant. Ask me any Python question (`how do lists work?`, `what is a decorator?`, `how do I fix IndentationError?`) or about our courses.",
       timestamp: new Date()
     }
   ]);
@@ -125,7 +125,7 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 50 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed bottom-6 right-6 z-[100] w-[90vw] max-w-[400px] h-[70vh] max-h-[600px] bg-neutral-900 rounded-2xl shadow-2xl flex flex-col border border-neutral-800 text-white overflow-hidden"
+            className="chat-panel fixed bottom-6 right-6 z-[100] w-[90vw] max-w-[400px] h-[70vh] max-h-[600px] bg-neutral-900 rounded-2xl shadow-2xl flex flex-col border border-neutral-800 text-white overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-neutral-800 bg-neutral-950/80 rounded-t-2xl flex-shrink-0">

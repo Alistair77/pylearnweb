@@ -70,16 +70,16 @@ export function Navigation5() {
   const isAboutActive = isHome && activeSection === 'about';
 
   const baseLink =
-    'rounded-full bg-transparent px-4 py-2 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-50';
+    'rounded-full bg-transparent px-4 py-2 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-neutral-50';
 
   const triggerCls =
-    'h-auto rounded-full bg-transparent px-4 py-2 text-sm font-medium text-neutral-600 transition-all hover:bg-neutral-100/50 hover:text-neutral-900 focus:bg-transparent data-[state=open]:bg-neutral-100/80 dark:text-neutral-400 dark:hover:bg-neutral-800/50 dark:hover:text-neutral-50 dark:data-[state=open]:bg-neutral-800/80';
+    'h-auto rounded-full bg-transparent px-4 py-2 text-sm font-medium text-neutral-600 transition-all hover:bg-neutral-100/50 hover:text-neutral-900 focus:bg-transparent data-[state=open]:bg-neutral-100/80 dark:text-neutral-300 dark:hover:bg-neutral-800/50 dark:hover:text-neutral-50 dark:data-[state=open]:bg-neutral-800/80';
 
   return (
     <div className="dark fixed top-0 left-0 right-0 z-50 w-full py-5">
       <div className="mx-auto flex max-w-7xl items-center justify-center px-6">
         {/* Floating Navbar Pill — dark liquid glass */}
-        <div className="flex h-16 w-full items-center justify-between gap-2 rounded-full border border-white/10 bg-neutral-900/60 pr-3 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] md:max-w-5xl">
+        <div className="flex h-16 w-full items-center justify-between gap-2 rounded-full border border-white/10 bg-neutral-900/85 pr-3 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.08)] md:max-w-5xl">
           {/* Logo — white wordmark sits directly on the dark glass pill */}
           <Link to="/" className="flex items-center pl-6 pr-6">
             <img src={logoImg} alt="PyLearnWeb" className="h-9 w-auto object-contain" />

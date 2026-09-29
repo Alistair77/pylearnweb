@@ -1,4 +1,4 @@
-# PyLearnWeb assistant — answer bank
+# PyLearnWeb assistant, answer bank
 
 Format and scoring rules live in answer.js. Entries listed earlier win ties, so specific
 entries sit above general ones.
@@ -6,7 +6,7 @@ entries sit above general ones.
 ## greeting
 keys: hi, hello, hey, hiya, yo, sup, howdy, greetings, good morning, good afternoon, good evening, hola
 kind: smalltalk
-Hey there! I'm the PyLearnWeb assistant. Ask me anything about Python — like `how do lists work?`, `what is a dictionary?` or `how do I fix IndentationError?` — or about our courses.
+Hey there! I'm the PyLearnWeb assistant. Ask me anything about Python (like `how do lists work?`, `what is a dictionary?` or `how do I fix IndentationError?`) or about our courses.
 
 ## how-are-you
 keys: how are you, how r u, hows it going, how is it going, how are things, you okay, whats up
@@ -16,28 +16,28 @@ Running smoothly, no exceptions raised. Thanks for asking! What would you like t
 ## thanks
 keys: thanks, thank, thx, ty, cheers, appreciate, helpful, great, awesome, nice, cool, perfect
 kind: smalltalk
-Happy to help! Ask another question anytime — that's how Python sticks.
+Happy to help! Ask another question anytime; that's how Python sticks.
 
 ## goodbye
 keys: bye, goodbye, cya, later, see you, good night, gtg
 kind: smalltalk
-See you soon! Keep coding — even 20 minutes a day adds up fast.
+See you soon! Keep coding: even 20 minutes a day adds up fast.
 
 ## who-are-you
 keys: who are you, what are you, your name, are you a bot, are you ai, are you human, are you real, who made you, who built you
 kind: smalltalk
-I'm the PyLearnWeb assistant — a built-in Python helper. I can explain Python concepts with examples, help decode common errors, and answer questions about our courses. I run right in your browser, so answers are instant.
+I'm the PyLearnWeb assistant, a built-in Python helper. I can explain Python concepts with examples, help decode common errors, and answer questions about our courses. I run right in your browser, so answers are instant.
 
 ## what-can-you-do
 keys: what can you do, help me, can you help, what do you know, what can i ask, capabilities, commands, menu
 kind: smalltalk
 I can help with:
-- **Python basics** — variables, types, strings, numbers, `if`, loops
-- **Data structures** — lists, tuples, dictionaries, sets, comprehensions
-- **Functions & classes** — arguments, lambdas, decorators, OOP, inheritance
-- **Errors** — `IndentationError`, `TypeError`, `KeyError` and friends
-- **Tools** — pip, virtual environments, testing, type hints
-- **Where to go next** — web, data, automation, project ideas
+- **Python basics**: variables, types, strings, numbers, `if`, loops
+- **Data structures**: lists, tuples, dictionaries, sets, comprehensions
+- **Functions & classes**: arguments, lambdas, decorators, OOP, inheritance
+- **Errors**: `IndentationError`, `TypeError`, `KeyError` and friends
+- **Tools**: pip, virtual environments, testing, type hints
+- **Where to go next**: web, data, automation, project ideas
 Try: `how do I reverse a list?`
 
 ## joke
@@ -65,9 +65,9 @@ Today is {date}.
 ## courses
 keys: course, courses, track, tracks, curriculum, beginner track, practitioner track, professional track, program, syllabus, lesson, lessons
 We offer three learning tracks:
-1. **Beginner Track** — start from zero: syntax, logic, and your first working programs.
-2. **Practitioner Track** — real projects, testing, and clean-code practices for job-ready skills.
-3. **Professional Track** — APIs, data pipelines, and deployment, with mentor code review.
+1. **Beginner Track**: start from zero with syntax, logic, and your first working programs.
+2. **Practitioner Track**: real projects, testing, and clean-code practices for job-ready skills.
+3. **Professional Track**: APIs, data pipelines, and deployment, with mentor code review.
 
 ## pricing
 keys: price, pricing, cost, costs, free, pay, subscription, fee, fees, how much
@@ -75,11 +75,11 @@ Pricing details are being finalised. Use the contact form at the bottom of the h
 
 ## contact
 keys: contact, email, support, reach, talk to human, phone, get in touch
-You can reach the team through the **Connect With Us** form on the home page — we reply to every message.
+You can reach the team through the **Ask us anything** form at the bottom of the home page. We reply to every message.
 
 ## platform
 keys: how does pylearnweb work, how it works, pylearnweb, your platform, mentor, mentors, code review
-PyLearnWeb pairs a structured, project-based curriculum with automated checks and real mentor feedback — every lesson ends with something you built, checked, and understand.
+PyLearnWeb pairs a structured, project-based curriculum with automated checks and real mentor feedback. Every lesson ends with something you built, checked, and understand.
 
 ## where-to-start
 keys: where to start, where do i start, how to start, get started, start learning, new to python, complete beginner, never coded, first step, roadmap, learning path
@@ -93,7 +93,7 @@ Our **Beginner Track** follows exactly this path with exercises at every step.
 
 ## how-long
 keys: how long, how many months, how much time, how fast can i learn, learn quickly
-With about an hour a day, most people get comfortable with the basics in **4–8 weeks** and can build useful small projects in **2–3 months**. Consistency matters more than long sessions — code a little every day.
+With about an hour a day, most people get comfortable with the basics in **4–8 weeks** and can build useful small projects in **2–3 months**. Consistency matters more than long sessions: code a little every day.
 
 ## what-is-python
 keys: what is python, why python, why learn python, is python good, python used for, what can python do, is python hard, is python easy
@@ -102,15 +102,15 @@ Python is a general-purpose programming language known for readable, beginner-fr
 - **Data analysis & AI** (pandas, NumPy, scikit-learn, PyTorch)
 - **Automation & scripting** (files, spreadsheets, web scraping)
 - **Testing, DevOps, and much more**
-It's one of the easiest first languages — and still used by professionals everywhere.
+It's one of the easiest first languages, and still used by professionals everywhere.
 
 ## install
 keys: install, installing, download python, setup python, set up python, python version, which version
-Download Python 3 from **python.org** (the installer on Windows — tick **Add Python to PATH**). On macOS you can also use `brew install python`. Then check it works:
+Download Python 3 from **python.org** (on Windows, tick **Add Python to PATH** in the installer). On macOS you can also use `brew install python`. Then check it works:
 ```bash
 python3 --version
 ```
-Use the latest Python 3 release — Python 2 is retired.
+Use the latest Python 3 release; Python 2 is retired.
 
 ## hello-world
 keys: hello world, first program, print, printing, output, display text
@@ -137,7 +137,7 @@ Comments explain **why**; clear names explain **what**.
 
 ## variables
 keys: variable, variables, assign, assignment, declare, naming, var
-A variable is a name pointing to a value — no type declaration needed:
+A variable is a name pointing to a value. No type declaration needed:
 ```python
 age = 25
 name = "Sam"
@@ -171,7 +171,7 @@ float("3.5")     # 3.5
 str(100)         # "100"
 list("abc")      # ['a', 'b', 'c']
 ```
-`int("hello")` raises `ValueError` — wrap user input in `try/except` if it might not be a number.
+`int("hello")` raises `ValueError`: wrap user input in `try/except` if it might not be a number.
 
 ## input
 keys: input, user input, read input, ask user, keyboard, get input
@@ -213,7 +213,7 @@ s.upper()   # 'PYTHON'
 len(s)      # 6
 "th" in s   # True
 ```
-Methods return **new** strings — `s.upper()` doesn't change `s`.
+Methods return **new** strings: `s.upper()` doesn't change `s`.
 
 ## numbers
 keys: number, numbers, math, arithmetic, division, integer division, modulo, remainder, power, exponent, floor, round, calculate
@@ -303,8 +303,8 @@ for name, score in zip(["Ada", "Bo"], [90, 85]):
 
 ## list-vs-tuple
 keys: list vs tuple, tuple vs list, list and tuple, difference list tuple
-- **List** `[1, 2]` — mutable: add, remove, change items
-- **Tuple** `(1, 2)` — immutable: fixed once created, slightly faster, usable as dict keys
+- **List** `[1, 2]` is mutable: add, remove, change items
+- **Tuple** `(1, 2)` is immutable: fixed once created, slightly faster, usable as dict keys
 Use a tuple for fixed records (`point = (3, 4)`), a list for collections that change.
 
 ## reverse-list
@@ -395,7 +395,7 @@ d = copy.deepcopy(a)   # fully independent
 keys: mutable, immutable, mutability, changeable
 - **Mutable** (can change in place): `list`, `dict`, `set`
 - **Immutable**: `int`, `float`, `str`, `tuple`, `bool`
-Watch out for mutable default arguments — use `def f(items=None):` then `items = items or []`.
+Watch out for mutable default arguments: use `def f(items=None):` then `items = items or []`.
 
 ## default-args
 keys: default argument, default arguments, args, kwargs, star args, keyword argument, keyword arguments, optional parameter
@@ -479,7 +479,7 @@ def bump():
     global count     # needed to reassign the outer name
     count += 1
 ```
-Prefer returning values over `global` — it keeps code easier to test.
+Prefer returning values over `global`: it keeps code easier to test.
 
 ## functions
 keys: function, functions, def, define function, return, parameter, parameters, argument, call function
@@ -553,7 +553,7 @@ class Point:
 
 p = Point(1, 2)
 print(p)        # (1, 2)
-p == Point(1, 2)  # True — dataclass adds __eq__
+p == Point(1, 2)  # True, dataclass adds __eq__
 ```
 
 ## exceptions
@@ -571,7 +571,7 @@ finally:
 
 raise ValueError("age must be positive")   # signal your own error
 ```
-Catch specific exceptions — a bare `except:` hides real bugs.
+Catch specific exceptions; a bare `except:` hides real bugs.
 
 ## indentation-error
 keys: indentationerror, indentation error, indentation, indent, unexpected indent, expected an indented block, tabs vs spaces, tab
@@ -592,7 +592,7 @@ keys: syntaxerror, syntax error, invalid syntax, eol while scanning, unterminate
 ## name-error
 keys: nameerror, name error, is not defined, not defined, undefined variable
 `NameError: name 'x' is not defined` means Python doesn't know that name yet. Check for:
-- Typos (`pritn` vs `print`, `Name` vs `name` — case matters)
+- Typos (`pritn` vs `print`, `Name` vs `name`: case matters)
 - Using a variable before assigning it
 - A missing `import`
 
@@ -604,16 +604,16 @@ keys: typeerror, type error, can only concatenate, unsupported operand, not call
 "Age: " + str(25)   # fix
 f"Age: {25}"        # nicer fix
 ```
-Read the message — it names the types involved.
+Read the message: it names the types involved.
 
 ## key-index-error
 keys: keyerror, key error, indexerror, index error, list index out of range, out of range
-- `IndexError`: you asked for a position that doesn't exist — `[1, 2][5]`. Check `len()` first.
-- `KeyError`: that key isn't in the dict — use `d.get("key")` or `if "key" in d:`.
+- `IndexError`: you asked for a position that doesn't exist, like `[1, 2][5]`. Check `len()` first.
+- `KeyError`: that key isn't in the dict. Use `d.get("key")` or `if "key" in d:`.
 
 ## attribute-error
 keys: attributeerror, attribute error, has no attribute, nonetype, object has no attribute
-`AttributeError: 'NoneType' object has no attribute ...` usually means a function returned `None` (e.g. `lst = lst.sort()` — `sort()` returns `None`). Check what the variable actually holds with `print(type(x))`.
+`AttributeError: 'NoneType' object has no attribute ...` usually means a function returned `None` (e.g. `lst = lst.sort()`: `sort()` returns `None`). Check what the variable actually holds with `print(type(x))`.
 
 ## module-not-found
 keys: modulenotfounderror, module not found, no module named, importerror, import error
@@ -625,7 +625,7 @@ If you use a virtual environment, activate it first.
 
 ## debugging
 keys: debug, debugging, debugger, find bug, bug, bugs, traceback, stack trace, breakpoint
-Read tracebacks **bottom-up** — the last line is the error, the lines above show where it happened. Then:
+Read tracebacks **bottom-up**: the last line is the error, the lines above show where it happened. Then:
 - `print()` variables to check assumptions
 - Drop `breakpoint()` in your code to pause and inspect interactively
 - Reproduce with the smallest possible example
@@ -664,7 +664,7 @@ import datetime as dt
 math.sqrt(16)        # 4.0
 choice(["a", "b"])
 ```
-Any `.py` file is a module — `import helpers` loads `helpers.py` from the same folder.
+Any `.py` file is a module: `import helpers` loads `helpers.py` from the same folder.
 
 ## pip
 keys: pip, package, packages, library, libraries, install package, pip install, requirements, requirements txt, pypi
@@ -765,7 +765,7 @@ def add(a, b):
 def test_add():
     assert add(2, 3) == 5
 ```
-Run `python3 -m pip install pytest` then `pytest` — it finds files named `test_*.py` automatically.
+Run `python3 -m pip install pytest` then `pytest`: it finds files named `test_*.py` automatically.
 
 ## requests-apis
 keys: requests, api, apis, http, fetch data, get request, web request, rest api, call api
@@ -792,9 +792,9 @@ Check a site's terms and `robots.txt` first, and prefer an official API when the
 ## web-dev
 keys: web, website, web development, backend, flask, django, fastapi, server, web app
 The big three Python web frameworks:
-- **Flask** — minimal and flexible, great first framework
-- **Django** — batteries included: admin, ORM, auth
-- **FastAPI** — modern, fast APIs with type hints
+- **Flask**: minimal and flexible, great first framework
+- **Django**: batteries included (admin, ORM, auth)
+- **FastAPI**: modern, fast APIs with type hints
 ```python
 from flask import Flask
 app = Flask(__name__)
@@ -813,7 +813,7 @@ df.head()
 df.groupby("region")["revenue"].sum()
 df.plot(x="month", y="revenue")
 ```
-Start with **pandas** and **matplotlib** in a Jupyter notebook — then NumPy and scikit-learn.
+Start with **pandas** and **matplotlib** in a Jupyter notebook, then NumPy and scikit-learn.
 
 ## ai-ml
 keys: ai, machine learning, ml, deep learning, neural network, tensorflow, pytorch, scikit learn, sklearn, llm, chatgpt
@@ -837,10 +837,10 @@ Other favourites: `openpyxl` for Excel, `smtplib` for email, `schedule` for recu
 ## project-ideas
 keys: project, projects, project idea, project ideas, what to build, practice, beginner projects, portfolio
 Projects that teach a lot:
-- **Beginner** — number guessing game, to-do list in the terminal, unit converter
-- **Intermediate** — weather app using an API, web scraper, expense tracker with CSV
-- **Advanced** — Flask/FastAPI web app, data dashboard, a Discord or Telegram bot
-Pick something you'd actually use — motivation beats difficulty.
+- **Beginner**: number guessing game, to-do list in the terminal, unit converter
+- **Intermediate**: weather app using an API, web scraper, expense tracker with CSV
+- **Advanced**: Flask/FastAPI web app, data dashboard, a Discord or Telegram bot
+Pick something you'd actually use: motivation beats difficulty.
 
 ## pep8
 keys: pep8, pep 8, style, style guide, clean code, formatting code, black, ruff, linter, best practice, best practices
@@ -856,7 +856,7 @@ Use **Python 3**. Python 2 reached end of life in 2020 and gets no security upda
 
 ## fallback
 keys:
-I don't have an answer for that one yet. I'm best at Python topics — try asking about:
+I don't have an answer for that one yet. I'm best at Python topics. Try asking about:
 - `lists`, `dictionaries`, `loops`, `functions`, `classes`
 - errors like `IndentationError` or `TypeError`
 - `pip`, `virtual environments`, `f-strings`

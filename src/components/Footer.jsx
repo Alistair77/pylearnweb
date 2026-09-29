@@ -77,7 +77,7 @@ export default function Footer() {
             <span className="h-3 w-3 rounded-full bg-white/15" />
             <span className="h-3 w-3 rounded-full bg-white/15" />
             <span className="h-3 w-3 rounded-full bg-accent-on-dark/60" />
-            <span className="ml-3 truncate font-mono text-xs text-zinc-500">learner@pylearnweb: ~ — python3</span>
+            <span className="ml-3 truncate font-mono text-xs text-zinc-500">learner@pylearnweb: ~ · python3</span>
           </div>
 
           {/* Session */}

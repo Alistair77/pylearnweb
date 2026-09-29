@@ -1,17 +1,24 @@
-import { Network, ShieldCheck } from 'lucide-react';
+import { Circle, CircleCheck, CircleDot, MessageSquareCode, Route } from 'lucide-react';
 import { CodeComment, TypeOnView } from './ui/Typewriter';
+import CodeSample from './ui/CodeSample';
 
-const solutionCards = [
-  {
-    icon: Network,
-    title: 'Structured Curriculum',
-    description: 'A clear, project-based path from your first script to production-ready code — no guessing what to learn next.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Real Code Review',
-    description: 'Get instant automated checks plus real mentor feedback on your code, so mistakes become lessons, not habits.',
-  },
+// A slice of a real learning path: two lessons done, one in progress, two ahead
+const LESSONS = [
+  { n: '04', title: 'Loops & ranges', state: 'done' },
+  { n: '05', title: 'Functions', state: 'done' },
+  { n: '06', title: 'Dictionaries', state: 'current' },
+  { n: '07', title: 'Files & JSON', state: 'next' },
+  { n: '08', title: 'Project: expense tracker', state: 'next' },
+];
+
+const LESSON_ICON = { done: CircleCheck, current: CircleDot, next: Circle };
+
+const REVIEW_CODE = [
+  'def average(scores):',
+  '    total = 0',
+  '    for s in scores:',
+  '        total += s',
+  '    return total / len(scores)',
 ];
 
 export function SolutionSection() {
@@ -21,34 +28,77 @@ export function SolutionSection() {
         <div className="text-center mb-16 animate-reveal-up">
           <CodeComment>how_it_works</CodeComment>
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight">
-            <TypeOnView text="How PyLearnWeb Teaches" />
+            <TypeOnView text="How PyLearnWeb teaches" />
           </h2>
           <p className="mt-4 text-lg text-gray-500 max-w-3xl mx-auto">
-            We combine structured curriculum with real feedback — the two things most Python resources skip.
+            We combine a structured curriculum with real feedback: the two things most Python resources skip.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
-          {solutionCards.map((card, i) => (
-            <div
-              key={card.title}
-              className="bg-surface/80 p-8 rounded-2xl border border-gray-200 transition-all duration-300 hover:ring-2 hover:ring-brand hover:bg-surface animate-reveal-up card-hover"
-              style={{ animationDelay: `${(i + 1) * 200}ms` }}
-            >
-              <div className="flex items-center gap-4 mb-4">
-                <div className="p-3 bg-brand-100 rounded-lg">
-                  <card.icon className="w-8 h-8 text-brand" />
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900">{card.title}</h3>
-              </div>
-              <p className="text-gray-600 leading-relaxed">{card.description}</p>
+        {/* The two halves of the method, shown working rather than described */}
+        <div className="mx-auto mb-20 grid max-w-5xl gap-6 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+          <article className="rounded-2xl border border-gray-200 bg-surface p-6 sm:p-8 animate-reveal-up delay-200">
+            <div className="mb-2 flex items-center gap-3">
+              <Route className="h-5 w-5 text-brand" strokeWidth={1.75} />
+              <h3 className="text-xl font-semibold tracking-tight text-gray-900">Structured curriculum</h3>
             </div>
-          ))}
+            <p className="mb-6 text-gray-600 leading-relaxed">
+              A clear, project-based path from your first script to production-ready code. You always know what&apos;s next.
+            </p>
+            <ol className="space-y-1 font-mono text-sm">
+              {LESSONS.map((lesson) => {
+                const Icon = LESSON_ICON[lesson.state];
+                const current = lesson.state === 'current';
+                return (
+                  <li
+                    key={lesson.n}
+                    aria-current={current ? 'step' : undefined}
+                    className={`flex items-center gap-3 rounded-lg px-3 py-2 ${current ? 'bg-brand-50 text-gray-900' : 'text-gray-600'}`}
+                  >
+                    <Icon
+                      className={`h-4 w-4 flex-none ${lesson.state === 'next' ? 'text-gray-400' : 'text-brand'}`}
+                      strokeWidth={2}
+                      aria-hidden="true"
+                    />
+                    <span className="text-gray-500">{lesson.n}</span>
+                    <span className={current ? 'font-semibold' : ''}>{lesson.title}</span>
+                    {current && <span className="ml-auto text-xs text-brand">you are here</span>}
+                    {lesson.state === 'done' && <span className="sr-only">(completed)</span>}
+                  </li>
+                );
+              })}
+            </ol>
+          </article>
+
+          <article className="rounded-2xl border border-gray-200 bg-surface p-6 sm:p-8 animate-reveal-up delay-300">
+            <div className="mb-2 flex items-center gap-3">
+              <MessageSquareCode className="h-5 w-5 text-brand" strokeWidth={1.75} />
+              <h3 className="text-xl font-semibold tracking-tight text-gray-900">Real code review</h3>
+            </div>
+            <p className="mb-6 text-gray-600 leading-relaxed">
+              Instant automated checks, then a mentor reads your code, so mistakes become lessons instead of habits.
+            </p>
+            <div className="overflow-hidden rounded-xl border border-gray-200">
+              <CodeSample lines={REVIEW_CODE} lineNumbers />
+              <p className="flex items-center gap-2 border-t border-gray-200 bg-surface px-4 py-2.5 font-mono text-xs text-gray-600">
+                <CircleCheck className="h-3.5 w-3.5 text-brand" strokeWidth={2} aria-hidden="true" />
+                3 tests passed
+              </p>
+              <div className="border-t border-gray-200 bg-brand-50 px-4 py-3.5">
+                <p className="mb-1 font-mono text-xs font-medium text-brand">mentor · line 5</p>
+                <p className="text-sm leading-relaxed text-gray-800">
+                  Nice and readable. What happens when <code className="font-mono text-[13px]">scores</code> is empty?
+                  Guard with <code className="font-mono text-[13px]">if not scores:</code> first, then try the built-in{' '}
+                  <code className="font-mono text-[13px]">sum()</code>.
+                </p>
+              </div>
+            </div>
+          </article>
         </div>
 
         <div className="max-w-6xl mx-auto animate-reveal-up delay-400">
           <div className="text-center mb-8">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-tight">The PyLearnWeb Learning Engine</h3>
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-800 tracking-tight">The PyLearnWeb learning engine</h3>
           </div>
 
           <div className="-mx-6 overflow-x-auto px-6 md:mx-0 md:px-0">
@@ -80,7 +130,7 @@ export function SolutionSection() {
               <rect x="50" y="20" width="520" height="350" fill="white" stroke="#e5e7eb" strokeWidth="1.5" rx="16" />
               <rect x="50" y="20" width="520" height="50" fill="#1f2937" rx="16" />
               <text x="310" y="52" textAnchor="middle" fontSize="20" fontWeight="600" fill="white" fontFamily="sans-serif">
-                Curriculum Engine — Structured Path
+                Curriculum engine · structured path
               </text>
               <circle cx="150" cy="190" r="40" fill="#374151" />
               <text x="150" y="195" textAnchor="middle" fontSize="18" fill="white" fontFamily="sans-serif">You</text>
@@ -114,7 +164,7 @@ export function SolutionSection() {
               <rect x="630" y="20" width="520" height="350" fill="white" stroke="#e5e7eb" strokeWidth="1.5" rx="16" />
               <rect x="630" y="20" width="520" height="50" fill="#dc2626" rx="16" />
               <text x="890" y="52" textAnchor="middle" fontSize="20" fontWeight="600" fill="white" fontFamily="sans-serif">
-                Practice Engine — Code Review
+                Practice engine · code review
               </text>
               <circle cx="730" cy="190" r="40" fill="#374151" />
               <text x="730" y="195" textAnchor="middle" fontSize="18" fill="white" fontFamily="sans-serif">You</text>

@@ -1,7 +1,7 @@
 import { Suspense, lazy, memo, useEffect, useRef, useState } from 'react';
-import { ArrowRight, Shield, HeartPulse, Landmark, Building, Zap } from 'lucide-react';
+import { ArrowRight, BookOpen, Briefcase, ChartColumn, GraduationCap, Hammer, MessageSquareCode, Server, Sprout } from 'lucide-react';
 import { ThinkingOrb } from 'thinking-orbs';
-import { TypedChars } from './ui/Typewriter';
+import { CodeComment, TypedChars } from './ui/Typewriter';
 import { useTypedCount } from '../hooks/useTypedCount';
 
 const QuantumScene = lazy(() => import('./hero3d/QuantumScene'));
@@ -24,47 +24,38 @@ const typeSpeed = (n) => (n === LINE_1.length ? 140 : 24);
 const SCENE_FALLBACK_MS = 15000;
 
 const audiences = [
-  { icon: HeartPulse, label: 'Beginners' },
-  { icon: Shield, label: 'Career Switchers' },
-  { icon: Landmark, label: 'Data & ML' },
-  { icon: Building, label: 'Backend Devs' },
-  { icon: Zap, label: 'Educators' },
+  { icon: Sprout, label: 'Beginners' },
+  { icon: Briefcase, label: 'Career Switchers' },
+  { icon: ChartColumn, label: 'Data & ML' },
+  { icon: Server, label: 'Backend Devs' },
+  { icon: GraduationCap, label: 'Educators' },
 ];
 
 const products = [
   {
+    icon: BookOpen,
     title: 'Interactive Lessons',
     desc: 'Bite-sized, structured lessons that build real Python skills step by step.',
+    cta: 'Browse the tracks',
+    target: 'products',
   },
   {
+    icon: Hammer,
     title: 'Hands-on Projects',
     desc: 'Apply what you learn immediately with guided, real-world coding projects.',
+    cta: 'See what you’ll build',
+    target: 'projects',
   },
   {
+    icon: MessageSquareCode,
     title: 'Mentor Code Review',
     desc: 'Get real feedback on your code from experienced mentors, not just autograders.',
+    cta: 'How review works',
+    target: 'two-pronged-approach',
   },
 ];
 
 const stats = ['50K+ Learners', '120+ Countries', '4.8/5 Rating', '2M+ Exercises Solved', 'Est. 2021'];
-
-/* Animated count-up for the "lines of code" figure (demo data). Its own component so the
-   per-frame updates re-render just this number, not the whole hero and 3D scene. */
-function LinesCounter({ target, duration = 1800 }) {
-  const [val, setVal] = useState(0);
-  useEffect(() => {
-    let raf;
-    const start = performance.now();
-    const tick = (now) => {
-      const p = Math.min(1, (now - start) / duration);
-      setVal(Math.floor(target * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [target, duration]);
-  return val.toLocaleString('en-US');
-}
 
 /* Typed headline in its own component: typing re-renders only these spans */
 function TypedHeadline() {
@@ -171,7 +162,7 @@ export default function Hero() {
           </p>
           <TypedHeadline />
           <p className="mx-auto mt-6 max-w-[54ch] text-[17px] leading-[1.65] text-gray-600 sm:text-[19px]">
-            PyLearnWeb teaches Python through structured lessons and hands-on projects — the skills that
+            PyLearnWeb teaches Python through structured lessons and hands-on projects: the skills that
             actually stick, not tutorials you forget by tomorrow.
           </p>
           <div className="mx-auto mt-8 flex max-w-xs flex-col justify-center gap-3 sm:max-w-none sm:flex-row sm:gap-4">
@@ -210,7 +201,7 @@ export default function Hero() {
 
       {/* Built for real skills + audiences */}
       <div className="relative mx-auto max-w-[1400px] px-6 pt-10 pb-16 text-center animate-reveal-up delay-200">
-        <p className="font-mono text-xs font-medium uppercase tracking-[0.18em] text-gray-500">Built for real skills</p>
+        <CodeComment className="mb-0">built_for_real_learners</CodeComment>
         <div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 sm:gap-x-10">
           {audiences.map((a) => (
             <div key={a.label} className="flex items-center gap-2.5 text-sm font-medium text-gray-700">
@@ -227,36 +218,37 @@ export default function Hero() {
           {products.map((p, i) => (
             <div key={p.title} className={i > 0 ? 'lg:pl-10' : ''}>
               <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand-50 text-brand">
-                <Shield className="w-5 h-5" strokeWidth={1.75} />
+                <p.icon className="w-5 h-5" strokeWidth={1.75} />
               </span>
               <h3 className="mt-5 text-xl font-semibold tracking-tight text-gray-900">{p.title}</h3>
               <p className="mt-2 text-[15px] leading-relaxed text-gray-600">{p.desc}</p>
-              <button className="group mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
-                Learn More <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
+              <button
+                type="button"
+                onClick={() => handleScroll(p.target)}
+                className="group mt-4 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand"
+              >
+                {p.cta} <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
               </button>
             </div>
           ))}
 
-          {/* Lines of code counter */}
+          {/* Week one, in real code: shows the product instead of a vanity metric */}
           <div className="lg:pl-10">
-            <h3 className="font-mono text-xs font-medium uppercase tracking-[0.14em] text-gray-500">Lines of code written today</h3>
-            <p className="mt-3 font-mono text-3xl font-bold tabular-nums text-brand">
-              <LinesCounter target={9384217} />
-            </p>
-            <svg viewBox="0 0 220 70" className="mt-3 w-full" preserveAspectRatio="none" aria-hidden="true">
-              <polyline
-                points="0,58 28,52 56,55 84,44 112,47 140,36 168,40 196,26 220,14"
-                fill="none"
-                stroke="#dc2626"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              {[[28, 52], [84, 44], [140, 36], [196, 26], [220, 14]].map(([x, y], i) => (
-                <circle key={i} cx={x} cy={y} r="2.6" fill="#dc2626" />
-              ))}
-            </svg>
-            <button className="group mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
+            <CodeComment className="mb-3">your_first_week</CodeComment>
+            <pre className="overflow-x-auto rounded-xl border border-gray-200 bg-gray-50 p-4 font-mono text-[13px] leading-relaxed text-gray-800">
+              <code>
+                <span className="text-brand">&gt;&gt;&gt;</span> name = <span className="text-brand">&quot;Ada&quot;</span>
+                {'\n'}
+                <span className="text-brand">&gt;&gt;&gt;</span> print(f<span className="text-brand">&quot;Hi, {'{'}name{'}'}!&quot;</span>)
+                {'\n'}
+                <span className="text-gray-600">Hi, Ada!</span>
+              </code>
+            </pre>
+            <button
+              type="button"
+              onClick={() => handleScroll('projects')}
+              className="group mt-3 inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-brand"
+            >
               See student projects <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" strokeWidth={2} />
             </button>
           </div>
@@ -266,12 +258,10 @@ export default function Hero() {
       {/* ===================== TRUSTED-BY STATS ===================== */}
       <div className="relative mx-auto max-w-[1400px] px-6 pb-16">
         <div className="flex flex-col items-start gap-8 border-t border-gray-200 pt-10 lg:flex-row lg:items-center lg:justify-between">
-          <p className="max-w-[14rem] font-mono text-xs font-medium uppercase leading-relaxed tracking-[0.14em] text-gray-500">
-            Trusted by a growing global community
-          </p>
+          <CodeComment className="mb-0 max-w-[16rem]">trusted_by_learners_worldwide</CodeComment>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-4 sm:gap-x-10">
             {stats.map((stat) => (
-              <span key={stat} className="font-display text-lg font-semibold tracking-tight text-gray-400 transition-colors hover:text-gray-600">
+              <span key={stat} className="font-display text-lg font-semibold tracking-tight text-gray-500">
                 {stat}
               </span>
             ))}

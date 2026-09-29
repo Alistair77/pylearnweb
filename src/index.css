@@ -149,6 +149,7 @@
   --color-brand-100: var(--accent-soft);
   --color-brand-50: var(--accent-softer);
   --color-accent-on-dark: var(--accent-on-dark);
+  --color-code-string: var(--code-string);
   --color-surface: var(--surface);
   --color-page: var(--bg);
   /* One warm-neutral scale for every gray on the site (replaces Tailwind's blue-tinted gray) */
@@ -269,7 +270,7 @@
     @apply inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-3 py-2 text-sm font-medium transition-colors duration-300 text-gray-400 hover:text-white;
   }
   .input-field {
-    @apply flex w-full rounded-md border px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-gray-100/80 border-gray-300 text-gray-900 placeholder:text-gray-500 h-12;
+    @apply flex w-full rounded-md border px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm bg-gray-100/80 border-gray-300 text-gray-900 placeholder:text-gray-500 h-12 focus-visible:ring-2;
   }
   .tag {
     @apply inline-flex items-center gap-2 text-xs text-gray-700 bg-gray-100 px-2 py-1 rounded-full;
@@ -447,6 +448,8 @@
   --accent-soft: #b9d6f2;
   --accent-softer: #e3eefa;
   --accent-on-dark: #b9d6f2;        /* accent text/icons on always-dark chrome */
+  --ring: var(--accent);            /* shadcn focus ring follows the brand accent */
+  --code-string: oklch(0.5 0.11 165); /* string literals in code samples */
   --accent-rgb: 3 83 164;           /* for canvas/3D code that needs raw channels */
   --line-rgb: 18 38 58;
   /* navy-tinted neutral scale; 900 is the brand ink #12263A */
@@ -486,6 +489,8 @@
   --accent-soft: oklch(0.3 0.09 295);
   --accent-softer: oklch(0.245 0.065 295);
   --accent-on-dark: oklch(0.76 0.12 295);
+  --ring: var(--accent);
+  --code-string: oklch(0.8 0.11 165);
   --accent-rgb: 139 97 227;
   --line-rgb: 164 158 196;
   --g-50: oklch(0.19 0.03 292);
@@ -510,6 +515,18 @@
   --n-800: oklch(0.27 0.055 292);
   --n-900: oklch(0.21 0.05 292);
   --n-950: oklch(0.15 0.04 292);
+}
+
+/* Keyboard focus: one visible, on-brand ring for links and buttons (WCAG 2.4.7).
+   Form fields use the 2px accent ring from .input-field instead. */
+:where(a, button, summary, [role='button'], [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+footer :where(a, button):focus-visible,
+.chat-panel :where(a, button):focus-visible {
+  outline-color: var(--accent-on-dark);
 }
 
 /* Inline SVGs still carry the old hard-coded reds — repaint them with the accent */

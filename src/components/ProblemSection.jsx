@@ -1,20 +1,20 @@
-import { TriangleAlert, ServerCrash, Clock, ArrowRight } from 'lucide-react';
+import { TriangleAlert, Route, Clock, ArrowRight } from 'lucide-react';
 import { CodeComment, TypeOnView } from './ui/Typewriter';
 
 const problems = [
   {
     icon: TriangleAlert,
-    title: 'Tutorial Hell',
+    title: 'Tutorial hell',
     description: 'Endless videos and copy-pasted code that never turns into projects you actually understand.',
   },
   {
-    icon: ServerCrash,
-    title: 'No Clear Path',
+    icon: Route,
+    title: 'No clear path',
     description: 'Scattered resources with no structured roadmap make it hard to know what to learn next.',
   },
   {
     icon: Clock,
-    title: "Skills That Don't Stick",
+    title: "Skills that don't stick",
     description: 'Without hands-on practice and real feedback, concepts fade as fast as they were learned.',
   },
 ];
